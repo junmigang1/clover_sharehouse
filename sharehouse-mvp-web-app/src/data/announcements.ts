@@ -3,7 +3,7 @@ import type { Announcement } from "../types";
 export const announcements: Announcement[] = [
   {
     id: "a1",
-    title: "오늘부터 조용한 시간 파일럿을 시작해요",
+    title: "밤 11시 이후 조용히 해주세요 — 2주간 시범 운영",
     body: "앞으로 2주 동안 밤 11시부터 오전 8시까지를 조용한 시간으로 운영합니다. 통화는 이어폰을 사용하고, 밤 11시 이후 공용 공간에서는 소리를 낮춰 주세요. 다음 주간 회의에서 의견을 모아 조정하겠습니다.",
     author: "박지나",
     date: "오늘 오전 9:12",

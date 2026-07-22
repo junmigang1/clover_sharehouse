@@ -14,7 +14,7 @@ export default function MarketplacePage() {
 
   return (
     <>
-      <TopBar title="마켓" sub="근처 하우스와 새 입주자를 위한 거래" actionIcon="plus" showBack={false} />
+      <TopBar title="마켓" sub="우리 집 · 새 입주자와 나누는 물품" actionIcon="plus" showBack={false} />
       <div style={{ padding: "0 12px" }}>
         <div className="chip-row">
           {CATEGORIES.map((category) => (

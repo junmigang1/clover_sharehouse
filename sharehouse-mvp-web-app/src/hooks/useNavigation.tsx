@@ -19,14 +19,37 @@ export type RouteKey =
   | "itemChat"
   | "ai"
   | "aiTool"
+  | "listings"
+  | "houseDetail"
+  | "compareHouses"
+  | "lifestyleSetup"
   | "my"
   | "members"
   | "cleaningRotation"
   | "notifications"
   | "settings"
-  | "profile";
+  | "profile"
+  | "announcementCompose"
+  | "anonBoard"
+  /* ===== 임대인 모드 ===== */
+  | "lordHome"
+  | "lordHouses"
+  | "lordHouseEdit"
+  | "lordInvite"
+  | "lordApplicants"
+  | "lordApplicantDetail"
+  | "lordReviews";
 
-export type TabKey = "home" | "community" | "marketplace" | "ai" | "my";
+export type TabKey =
+  | "home"
+  | "community"
+  | "marketplace"
+  | "ai"
+  | "my"
+  | "lordHome"
+  | "lordHouses"
+  | "lordApplicants"
+  | "lordReviews";
 
 export interface Route {
   key: RouteKey;
@@ -46,12 +69,25 @@ const ROUTE_TAB: Record<RouteKey, TabKey> = {
   itemChat: "marketplace",
   ai: "ai",
   aiTool: "ai",
+  listings: "ai",
+  houseDetail: "ai",
+  compareHouses: "ai",
+  lifestyleSetup: "ai",
   my: "my",
   members: "my",
   cleaningRotation: "my",
   notifications: "my",
   settings: "my",
   profile: "my",
+  announcementCompose: "home",
+  anonBoard: "home",
+  lordHome: "lordHome",
+  lordHouses: "lordHouses",
+  lordHouseEdit: "lordHouses",
+  lordInvite: "lordHouses",
+  lordApplicants: "lordApplicants",
+  lordApplicantDetail: "lordApplicants",
+  lordReviews: "lordReviews",
 };
 
 const TAB_ROOT: Record<TabKey, RouteKey> = {
@@ -60,6 +96,10 @@ const TAB_ROOT: Record<TabKey, RouteKey> = {
   marketplace: "marketplace",
   ai: "ai",
   my: "my",
+  lordHome: "lordHome",
+  lordHouses: "lordHouses",
+  lordApplicants: "lordApplicants",
+  lordReviews: "lordReviews",
 };
 
 interface NavContext {
@@ -73,8 +113,14 @@ interface NavContext {
 
 const Ctx = createContext<NavContext | null>(null);
 
-export function NavigationProvider({ children }: { children: ReactNode }) {
-  const [stack, setStack] = useState<Route[]>([{ key: "home" }]);
+export function NavigationProvider({
+  children,
+  initialRoute = "home",
+}: {
+  children: ReactNode;
+  initialRoute?: RouteKey;
+}) {
+  const [stack, setStack] = useState<Route[]>([{ key: initialRoute }]);
 
   const navigate = useCallback(
     (key: RouteKey, params?: Record<string, unknown>) => {

@@ -8,6 +8,10 @@ import MarketplacePage from "../pages/MarketplacePage";
 import { ItemDetailPage, ItemChatPage } from "../pages/ItemDetailPage";
 import AIPage from "../pages/AIPage";
 import AIToolPage from "../pages/AIToolPage";
+import ListingsPage from "../pages/ListingsPage";
+import HouseDetailPage from "../pages/HouseDetailPage";
+import CompareHousesPage from "../pages/CompareHousesPage";
+import LifestyleSetupPage from "../pages/LifestyleSetupPage";
 import MyPage from "../pages/MyPage";
 import {
   MembersPage,
@@ -16,6 +20,15 @@ import {
   SettingsPage,
   ProfilePage,
 } from "../pages/MySubPages";
+import AnnouncementComposePage from "../pages/AnnouncementComposePage";
+import AnonBoardPage from "../pages/AnonBoardPage";
+import LordHomePage from "../pages/LordHomePage";
+import LordHousesPage from "../pages/LordHousesPage";
+import LordHouseEditPage from "../pages/LordHouseEditPage";
+import LordInvitePage from "../pages/LordInvitePage";
+import LordApplicantsPage from "../pages/LordApplicantsPage";
+import LordApplicantDetailPage from "../pages/LordApplicantDetailPage";
+import LordReviewsPage from "../pages/LordReviewsPage";
 
 export default function Router() {
   const { current } = useNavigation();
@@ -44,6 +57,14 @@ export default function Router() {
       return <AIPage />;
     case "aiTool":
       return <AIToolPage id={id} />;
+    case "listings":
+      return <ListingsPage />;
+    case "houseDetail":
+      return <HouseDetailPage id={id} />;
+    case "compareHouses":
+      return <CompareHousesPage />;
+    case "lifestyleSetup":
+      return <LifestyleSetupPage />;
     case "my":
       return <MyPage />;
     case "members":
@@ -56,6 +77,26 @@ export default function Router() {
       return <SettingsPage />;
     case "profile":
       return <ProfilePage />;
+    case "announcementCompose":
+      return <AnnouncementComposePage />;
+    case "anonBoard":
+      return <AnonBoardPage />;
+
+    /* ===== 임대인 모드 ===== */
+    case "lordHome":
+      return <LordHomePage />;
+    case "lordHouses":
+      return <LordHousesPage />;
+    case "lordHouseEdit":
+      return <LordHouseEditPage id={id} />;
+    case "lordInvite":
+      return <LordInvitePage id={id} />;
+    case "lordApplicants":
+      return <LordApplicantsPage />;
+    case "lordApplicantDetail":
+      return <LordApplicantDetailPage id={id} />;
+    case "lordReviews":
+      return <LordReviewsPage />;
     default:
       return <HomePage />;
   }

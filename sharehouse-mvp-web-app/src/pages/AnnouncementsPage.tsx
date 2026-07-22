@@ -11,7 +11,7 @@ export function AnnouncementsPage() {
   const { navigate } = useNavigation();
   return (
     <>
-      <TopBar title="공지사항" />
+      <TopBar title="공지사항" actionIcon="plus" onAction={() => navigate("announcementCompose")} />
       <Screen>
         <div className="stack gap-10" style={{ marginTop: 8 }}>
           {announcements.map((notice) => (
@@ -25,7 +25,7 @@ export function AnnouncementsPage() {
               </div>
               <div style={{ fontWeight: 900, fontSize: 16.5, lineHeight: 1.34 }}>{notice.title}</div>
               <div className="clamp-2 caption" style={{ marginTop: 7, lineHeight: 1.5 }}>{notice.body}</div>
-              <div className="caption" style={{ marginTop: 10, fontWeight: 800 }}>{notice.author}</div>
+              <div className="caption" style={{ marginTop: 10, fontWeight: 800 }}>{notice.anonymous ? "입주자 (익명)" : notice.author}</div>
             </Card>
           ))}
         </div>
@@ -35,10 +35,11 @@ export function AnnouncementsPage() {
 }
 
 export function AnnouncementDetailPage({ id }: { id: string }) {
+  const { navigate } = useNavigation();
   const notice = announcements.find((item) => item.id === id) ?? announcements[0];
   return (
     <>
-      <TopBar title="공지" actionIcon="more" />
+      <TopBar title="공지" actionIcon="plus" onAction={() => navigate("announcementCompose")} />
       <Screen>
         <div style={{ padding: "10px 4px 0" }}>
           <Tag variant={tagVariant(notice.tag)}>{notice.tag}</Tag>

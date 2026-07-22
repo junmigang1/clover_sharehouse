@@ -67,6 +67,7 @@ export function Button({
   sm = false,
   icon,
   style,
+  disabled,
 }: {
   children: ReactNode;
   onClick?: () => void;
@@ -75,6 +76,7 @@ export function Button({
   sm?: boolean;
   icon?: Parameters<typeof Icon>[0]["name"];
   style?: CSSProperties;
+  disabled?: boolean;
 }) {
   return (
     <button
@@ -82,7 +84,8 @@ export function Button({
         sm ? " btn--sm" : ""
       }`}
       onClick={onClick}
-      style={style}
+      disabled={disabled}
+      style={{ ...style, ...(disabled ? { opacity: 0.45, cursor: "not-allowed" } : {}) }}
     >
       {icon && <Icon name={icon} size={sm ? 16 : 19} />}
       {children}

@@ -106,7 +106,7 @@ export default function HomePage() {
               </div>
             </Card>
 
-            <SectionHeader title="최근 공지" more="더보기" onMore={() => navigate("announcements")} />
+            <SectionHeader title="최근 공지" more="작성 +" onMore={() => navigate("announcementCompose")} />
             <Card pad={false}>
               {announcements.slice(0, 2).map((notice) => (
                 <ListRow
@@ -169,6 +169,20 @@ export default function HomePage() {
                   </div>
                 );
               })}
+            </Card>
+
+            <SectionHeader title="익명 건의함" />
+            <Card onClick={() => navigate("anonBoard")} style={{ background: "var(--violet-soft, var(--primary-soft))" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div className="icon-tile" style={{ width: 42, height: 42, background: "var(--primary-soft)", color: "var(--primary)" }}>
+                  <Icon name="comment" size={20} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 900, fontSize: 14.5 }}>불편한 점 익명으로 남기기</div>
+                  <div className="caption" style={{ marginTop: 2 }}>같은 집 입주자들만 볼 수 있어요</div>
+                </div>
+                <Icon name="chevron-right" size={18} style={{ color: "var(--primary)" }} />
+              </div>
             </Card>
 
             <SectionHeader title="하우스 멤버" more="전체" onMore={() => navigate("members")} />

@@ -3,31 +3,33 @@ import Icon from "./Icon";
 import { useNavigation, type TabKey } from "../hooks/useNavigation";
 import { house, me } from "../data/members";
 import Avatar from "./Avatar";
+import { useRole } from "../hooks/useRole";
+import { landlord } from "../data/landlord";
 
-export type ViewMode = "web" | "app";
 
-const DESKTOP_NAV: { key: TabKey; label: string; desc: string; icon: Parameters<typeof Icon>[0]["name"] }[] = [
-  { key: "home", label: "홈", desc: "운영 현황", icon: "home" },
-  { key: "community", label: "커뮤니티", desc: "소통과 투표", icon: "community" },
-  { key: "marketplace", label: "마켓", desc: "근처 하우스 거래", icon: "market" },
-  { key: "ai", label: "AI 도우미", desc: "공지와 말투 변환", icon: "ai" },
-  { key: "my", label: "MY", desc: "내 정보", icon: "user" },
+type NavItem = { key: TabKey; label: string; desc: string; icon: Parameters<typeof Icon>[0]["name"] };
+
+const TENANT_NAV: NavItem[] = [
+  { key: "home", label: "홈", desc: "", icon: "home" },
+  { key: "community", label: "커뮤니티", desc: "", icon: "community" },
+  { key: "marketplace", label: "마켓", desc: "", icon: "market" },
+  { key: "ai", label: "하우스 찾기", desc: "", icon: "ai" },
+  { key: "my", label: "MY", desc: "", icon: "user" },
 ];
 
-export function MobileFrame({
-  children,
-  mode,
-  onModeChange,
-}: {
-  children: ReactNode;
-  mode: ViewMode;
-  onModeChange: (mode: ViewMode) => void;
-}) {
+const LANDLORD_NAV: NavItem[] = [
+  { key: "lordHome", label: "운영 현황", desc: "", icon: "home" },
+  { key: "lordHouses", label: "내 매물", desc: "", icon: "market" },
+  { key: "lordApplicants", label: "입주 신청", desc: "", icon: "user" },
+  { key: "lordReviews", label: "만족도 리포트", desc: "", icon: "check-circle" },
+];
+
+export function MobileFrame({ children }: { children: ReactNode }) {
   return (
-    <div className={`frame-stage frame-stage--${mode}`}>
+    <div className="frame-stage frame-stage--web">
       <div className="frame">
-        <DesktopSidebar mode={mode} onModeChange={onModeChange} />
-        <ModeSwitch mode={mode} onModeChange={onModeChange} />
+        <DesktopSidebar />
+        <RoleSwitch />
         <div className="app-content">
           <StatusBar />
           {children}
@@ -37,35 +39,39 @@ export function MobileFrame({
   );
 }
 
-function DesktopSidebar({
-  mode,
-  onModeChange,
-}: {
-  mode: ViewMode;
-  onModeChange: (mode: ViewMode) => void;
-}) {
+function DesktopSidebar() {
   const { activeTab, switchTab } = useNavigation();
+  const { role, setRole } = useRole();
+  const isLord = role === "landlord";
+  const navItems = isLord ? LANDLORD_NAV : TENANT_NAV;
   return (
     <aside className="desktop-sidebar" aria-label="주요 메뉴">
       <div className="desktop-brand">
         <div className="desktop-brand__mark">N</div>
         <div>
           <div className="desktop-brand__title">NestHub</div>
-          <div className="desktop-brand__sub">{house.name}</div>
+          <div className="desktop-brand__sub">{isLord ? landlord.name : house.name}</div>
         </div>
       </div>
 
-      <div className="version-toggle version-toggle--sidebar" aria-label="버전 선택">
-        <button className={mode === "web" ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"} onClick={() => onModeChange("web")}>
-          웹 버전
+      <div className="version-toggle version-toggle--sidebar" aria-label="역할 선택">
+        <button
+          className={!isLord ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"}
+          onClick={() => setRole("tenant")}
+        >
+          입주자
         </button>
-        <button className={mode === "app" ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"} onClick={() => onModeChange("app")}>
-          앱 버전
+        <button
+          className={isLord ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"}
+          onClick={() => setRole("landlord")}
+        >
+          임대인
         </button>
       </div>
 
+
       <nav className="desktop-nav">
-        {DESKTOP_NAV.map((item) => {
+        {navItems.map((item) => {
           const active = activeTab === item.key;
           return (
             <button
@@ -78,7 +84,7 @@ function DesktopSidebar({
               </span>
               <span>
                 <span className="desktop-nav__label">{item.label}</span>
-                <span className="desktop-nav__desc">{item.desc}</span>
+                {item.desc && <span className="desktop-nav__desc">{item.desc}</span>}
               </span>
             </button>
           );
@@ -88,28 +94,29 @@ function DesktopSidebar({
       <div className="desktop-profile">
         <Avatar member={me} size={40} />
         <div>
-          <div className="desktop-profile__name">유빈님</div>
-          <div className="desktop-profile__sub">{me.room}</div>
+          <div className="desktop-profile__name">{isLord ? "운영자님" : "유빈님"}</div>
+          <div className="desktop-profile__sub">{isLord ? landlord.contact : me.room}</div>
         </div>
       </div>
     </aside>
   );
 }
 
-function ModeSwitch({
-  mode,
-  onModeChange,
-}: {
-  mode: ViewMode;
-  onModeChange: (mode: ViewMode) => void;
-}) {
+function RoleSwitch() {
+  const { role, setRole } = useRole();
   return (
-    <div className="version-toggle version-toggle--floating" aria-label="버전 선택">
-      <button className={mode === "web" ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"} onClick={() => onModeChange("web")}>
-        웹
+    <div className="version-toggle version-toggle--floating" aria-label="역할 선택">
+      <button
+        className={role === "tenant" ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"}
+        onClick={() => setRole("tenant")}
+      >
+        입주자
       </button>
-      <button className={mode === "app" ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"} onClick={() => onModeChange("app")}>
-        앱
+      <button
+        className={role === "landlord" ? "version-toggle__item version-toggle__item--active" : "version-toggle__item"}
+        onClick={() => setRole("landlord")}
+      >
+        임대인
       </button>
     </div>
   );
