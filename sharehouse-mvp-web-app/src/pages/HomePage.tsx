@@ -192,7 +192,7 @@ export default function HomePage() {
             </Card>
 
             {/* 6. 하우스 멤버 */}
-            <SectionHeader title="하우스 멤버" more="전체" onMore={() => navigate("members")} />
+            <SectionHeader title="하우스 멤버" more="채팅" onMore={() => navigate("chatList")} />
             <Card>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {["m1", "m2", "m3", "m4", "m5", "me"].map((id) => {

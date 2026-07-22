@@ -60,7 +60,15 @@ export function Placeholder({
         border: "1px solid rgba(255,255,255,0.85)",
       }}
     >
-      <span style={{ fontSize: big ? 34 : 18, fontWeight: 950, color: "var(--primary)" }}>{item.emoji}</span>
+      {item.photos?.[0] ? (
+        <img
+          src={item.photos[0]}
+          alt={item.title}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      ) : (
+        <span style={{ fontSize: big ? 34 : 18, fontWeight: 950, color: "var(--primary)" }}>{item.emoji}</span>
+      )}
       {item.status !== "판매중" && (
         <div style={{ position: "absolute", inset: 0, background: "rgba(23,19,33,0.48)", display: "grid", placeItems: "center", color: "#fff", fontWeight: 950, fontSize: big ? 20 : 14 }}>
           {item.status}

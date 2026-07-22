@@ -3,35 +3,33 @@ import { Screen, TopBar } from "../components/Layout";
 import { Card } from "../components/Primitives";
 import Avatar from "../components/Avatar";
 import Icon from "../components/Icon";
-import { memberById } from "../data/members";
-
-interface Msg { id: string; senderId: string; text: string; time: string; }
-
-const INIT_MSGS: Msg[] = [
-  { id:"m1", senderId:"m1", text:"안녕하세요! 내일 청소 담당이 저 맞죠?", time:"오후 2:10" },
-  { id:"m2", senderId:"me", text:"네 맞아요~ 주방이랑 현관이에요!", time:"오후 2:11" },
-  { id:"m3", senderId:"m2", text:"오늘 밤 늦게 들어올 것 같아서 미리 공유해요", time:"오후 3:44" },
-  { id:"m4", senderId:"m3", text:"ㅇㅋ 알겠어요 👍", time:"오후 3:45" },
-  { id:"m5", senderId:"me", text:"냉장고 공용 칸 라벨 붙여놨어요!", time:"오후 5:20" },
-];
+import { memberById, members, house } from "../data/members";
+import { threadOf, appendMessage, type ChatMsg } from "../data/chats";
 
 export default function MemberChatPage({ memberId }: { memberId?: string }) {
-  const [msgs, setMsgs] = useState<Msg[]>(INIT_MSGS);
-  const [draft, setDraft] = useState("");
   const isGroup = !memberId;
-  const title = isGroup ? "하우스 채팅" : memberById(memberId).name;
+  const [msgs, setMsgs] = useState<ChatMsg[]>(() => [...threadOf(memberId)]);
+  const [draft, setDraft] = useState("");
+  const title = isGroup ? house.name : memberById(memberId).name;
 
   const send = () => {
     if (!draft.trim()) return;
-    setMsgs(prev => [...prev, { id: `m${Date.now()}`, senderId:"me", text: draft.trim(), time:"방금" }]);
+    const msg: ChatMsg = { id: `c${Date.now()}`, senderId: "me", text: draft.trim(), time: "방금" };
+    appendMessage(memberId, msg);          // 채팅 목록의 미리보기와 공유
+    setMsgs(prev => [...prev, msg]);
     setDraft("");
   };
 
   return (
     <>
-      <TopBar title={title} sub={isGroup ? "네스트허브 연남 · 6명" : ""} />
+      <TopBar title={title} sub={isGroup ? `단체 채팅 · ${members.length}명` : memberById(memberId!).room} />
       <div style={{ display:"flex", flexDirection:"column", height:"calc(100vh - 56px)", overflow:"hidden" }}>
         <div style={{ flex:1, overflowY:"auto", padding:"12px 16px", display:"flex", flexDirection:"column", gap:10 }}>
+          {msgs.length === 0 && (
+            <div className="caption" style={{ textAlign:"center", padding:"40px 20px", lineHeight:1.6 }}>
+              아직 대화가 없어요.<br />첫 메시지를 보내보세요.
+            </div>
+          )}
           {msgs.map(msg => {
             const isMe = msg.senderId === "me";
             const sender = isMe ? null : memberById(msg.senderId);
@@ -39,7 +37,7 @@ export default function MemberChatPage({ memberId }: { memberId?: string }) {
               <div key={msg.id} style={{ display:"flex", flexDirection: isMe ? "row-reverse" : "row", alignItems:"flex-end", gap:8 }}>
                 {!isMe && sender && <Avatar member={sender} size={32} />}
                 <div style={{ maxWidth:"72%" }}>
-                  {!isMe && sender && <div className="caption" style={{ marginBottom:3, marginLeft:2 }}>{sender.name}</div>}
+                  {!isMe && sender && isGroup && <div className="caption" style={{ marginBottom:3, marginLeft:2 }}>{sender.name}</div>}
                   <div style={{
                     padding:"10px 13px", borderRadius: isMe ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
                     background: isMe ? "var(--primary)" : "var(--surface)",

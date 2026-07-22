@@ -13,6 +13,7 @@ export function ItemDetailPage({ id }: { id: string }) {
   const item = marketItems.find((entry) => entry.id === id) ?? marketItems[0];
   const isMine = item.seller === "유빈";
   const [status, setStatus] = useState(item.status);
+  const [photoIdx, setPhotoIdx] = useState(0);
 
   const changeStatus = (next: typeof status) => {
     setStatus(next);
@@ -23,7 +24,40 @@ export function ItemDetailPage({ id }: { id: string }) {
     <>
       <TopBar title="상품" actionIcon="more" />
       <Screen>
-        <Placeholder item={item} height={260} radius={24} big />
+        {item.photos?.length ? (
+          <>
+            <div style={{ height: 260, borderRadius: 24, overflow: "hidden", position: "relative", border: "1px solid var(--line)" }}>
+              <img
+                src={item.photos[photoIdx]}
+                alt={item.title}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+              {status !== "판매중" && (
+                <div style={{ position: "absolute", inset: 0, background: "rgba(23,19,33,0.48)", display: "grid", placeItems: "center", color: "#fff", fontWeight: 950, fontSize: 20 }}>
+                  {status}
+                </div>
+              )}
+            </div>
+            {item.photos.length > 1 && (
+              <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                {item.photos.map((src, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setPhotoIdx(i)}
+                    style={{
+                      width: 56, height: 56, borderRadius: 12, overflow: "hidden", padding: 0, cursor: "pointer",
+                      border: i === photoIdx ? "2px solid var(--primary)" : "1px solid var(--line)",
+                    }}
+                  >
+                    <img src={src} alt={`사진 ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <Placeholder item={item} height={260} radius={24} big />
+        )}
 
         <div style={{ padding: "16px 4px 0" }}>
           <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>

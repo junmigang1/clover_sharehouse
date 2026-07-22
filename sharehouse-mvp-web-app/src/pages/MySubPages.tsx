@@ -10,7 +10,7 @@ export function MembersPage() {
   const { navigate } = useNavigation();
   return (
     <>
-      <TopBar title="하우스 멤버" sub={`${house.name} · ${members.length}명`} actionIcon="community" onAction={() => navigate("memberChat")} />
+      <TopBar title="하우스 멤버" sub={`${house.name} · ${members.length}명`} actionIcon="community" onAction={() => navigate("chatList")} />
       <Screen>
         <Card pad={false} style={{ marginTop: 8 }}>
           {members.map((member) => (

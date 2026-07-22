@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Screen, TopBar } from "../components/Layout";
 import { Button, Card, SectionHeader } from "../components/Primitives";
 import { useNavigation } from "../hooks/useNavigation";
 import { addMarketItem } from "../data/marketplace";
+import { fileToResizedDataUrl } from "../data/imageUtils";
+import Icon from "../components/Icon";
 import type { MarketItem } from "../types";
 
 const CATEGORIES = ["책상", "의자", "침구", "주방", "가전", "기타"] as const;
@@ -27,7 +29,30 @@ export default function MarketComposePage() {
   const [isFree, setIsFree] = useState(false);
   const [condition, setCondition] = useState<typeof CONDITIONS[number]>("상태 좋음");
   const [desc, setDesc] = useState("");
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
   const [submitted, setSubmitted] = useState(false);
+
+  const MAX_PHOTOS = 4;
+
+  const pickPhotos = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    try {
+      const room = MAX_PHOTOS - photos.length;
+      const picked = Array.from(files).slice(0, room);
+      const urls = await Promise.all(picked.map((f) => fileToResizedDataUrl(f)));
+      setPhotos((prev) => [...prev, ...urls].slice(0, MAX_PHOTOS));
+    } catch {
+      /* 실패한 파일은 조용히 건너뛴다 */
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  };
+
+  const removePhoto = (i: number) => setPhotos((prev) => prev.filter((_, idx) => idx !== i));
 
   const canSubmit = title.trim() && desc.trim();
 
@@ -47,6 +72,7 @@ export default function MarketComposePage() {
       bg: BG_MAP[category],
       desc: desc.trim(),
       status: "판매중",
+      photos: photos.length ? photos : undefined,
     };
     addMarketItem(newItem);
     setSubmitted(true);
@@ -58,6 +84,51 @@ export default function MarketComposePage() {
       <TopBar title="물건 올리기" sub="새 입주자에게 넘기거나 나눔해요" />
       <Screen>
         <Card style={{ marginTop: 8 }}>
+          <div className="row-between" style={{ marginBottom: 8 }}>
+            <span className="caption">사진</span>
+            <span className="caption">{photos.length}/{MAX_PHOTOS}</span>
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {photos.map((src, i) => (
+              <div key={i} style={{ position: "relative", width: 78, height: 78, borderRadius: 14, overflow: "hidden", border: "1px solid var(--line)" }}>
+                <img src={src} alt={`업로드 사진 ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                {i === 0 && (
+                  <span style={{ position: "absolute", left: 4, bottom: 4, background: "rgba(23,19,33,0.7)", color: "#fff", fontSize: 9, fontWeight: 850, padding: "2px 5px", borderRadius: 6 }}>대표</span>
+                )}
+                <button
+                  onClick={() => removePhoto(i)}
+                  aria-label="사진 삭제"
+                  style={{ position: "absolute", top: 3, right: 3, width: 20, height: 20, borderRadius: 999, border: "none", background: "rgba(23,19,33,0.65)", color: "#fff", fontSize: 12, lineHeight: 1, cursor: "pointer" }}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+            {photos.length < MAX_PHOTOS && (
+              <button
+                onClick={() => fileRef.current?.click()}
+                disabled={uploading}
+                style={{ width: 78, height: 78, borderRadius: 14, border: "2px dashed var(--line)", background: "var(--bg)", color: "var(--primary)", cursor: "pointer", display: "grid", placeItems: "center", gap: 2 }}
+              >
+                <Icon name="plus" size={18} />
+                <span style={{ fontSize: 10, fontWeight: 800 }}>{uploading ? "처리 중" : "사진"}</span>
+              </button>
+            )}
+          </div>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => pickPhotos(e.target.files)}
+            style={{ display: "none" }}
+          />
+          <div className="caption" style={{ marginTop: 8 }}>
+            첫 번째 사진이 목록의 대표 이미지로 쓰여요.
+          </div>
+        </Card>
+
+        <Card style={{ marginTop: 10 }}>
           <div className="caption" style={{ marginBottom: 6 }}>카테고리</div>
           <div className="chip-row" style={{ flexWrap: "wrap" }}>
             {CATEGORIES.map(c => (

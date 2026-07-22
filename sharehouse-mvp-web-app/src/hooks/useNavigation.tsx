@@ -37,6 +37,7 @@ export type RouteKey =
   | "houseInfo"
   | "marketCompose"
   | "myApplications"
+  | "chatList"
   /* ===== 임대인 모드 ===== */
   | "lordHome"
   | "lordHouses"
@@ -93,6 +94,7 @@ const ROUTE_TAB: Record<RouteKey, TabKey> = {
   houseInfo: "community",
   marketCompose: "marketplace",
   myApplications: "ai",
+  chatList: "home",
   lordHome: "lordHome",
   lordHouses: "lordHouses",
   lordHouseEdit: "lordHouses",
