@@ -3,7 +3,7 @@ import { Card, SectionHeader, Tag, Button } from "../components/Primitives";
 import Icon from "../components/Icon";
 import { Bar } from "../components/HouseBits";
 import { useNavigation } from "../hooks/useNavigation";
-import { houseById } from "../data/houses";
+import { houseById, openRoomCount } from "../data/houses";
 import { myHouseIds, applicants, invites } from "../data/landlord";
 import { tenureLabel } from "../data/lifestyle";
 
@@ -11,7 +11,7 @@ export default function LordHomePage() {
   const { navigate } = useNavigation();
   const myHouses = myHouseIds.map(houseById);
 
-  const openRooms = myHouses.reduce((sum, h) => sum + h.openRooms, 0);
+  const openRooms = myHouses.reduce((sum, h) => sum + openRoomCount(h), 0);
   const pending = applicants.filter((a) => a.status === "검토 전" || a.status === "투어 요청");
   const pendingMine = pending.filter((a) => myHouseIds.includes(a.houseId));
   const liveInvites = invites.filter((i) => i.status === "미사용").length;
@@ -92,11 +92,15 @@ export default function LordHomePage() {
               <Card key={h.id} onClick={() => navigate("lordReviews")}>
                 <div className="row-between" style={{ marginBottom: 8 }}>
                   <div style={{ fontWeight: 900, fontSize: 15 }}>{h.name}</div>
-                  <span className="num" style={{ fontWeight: 900, color: "var(--primary)" }}>{latest.satisfaction}%</span>
+                  <span className="num" style={{ fontWeight: 900, color: latest ? "var(--primary)" : "var(--text-3)" }}>
+                    {latest ? `${latest.satisfaction}%` : "—"}
+                  </span>
                 </div>
-                <Bar value={latest.satisfaction} />
+                <Bar value={latest?.satisfaction ?? 0} />
                 <div className="caption" style={{ marginTop: 8 }}>
-                  {latest.period} · 익명 {latest.responses}명 · 평균 거주 {tenureLabel(h.avgTenureMonths)}
+                  {latest
+                    ? `${latest.period} · 익명 ${latest.responses}명 · 평균 거주 ${tenureLabel(h.avgTenureMonths)}`
+                    : "아직 모인 후기가 없어요"}
                 </div>
               </Card>
             );

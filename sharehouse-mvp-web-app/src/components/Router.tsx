@@ -27,6 +27,7 @@ import MoveInRequestPage from "../pages/MoveInRequestPage";
 import MemberChatPage from "../pages/MemberChatPage";
 import HouseInfoPage from "../pages/HouseInfoPage";
 import MarketComposePage from "../pages/MarketComposePage";
+import MyApplicationsPage from "../pages/MyApplicationsPage";
 import LordHomePage from "../pages/LordHomePage";
 import LordHousesPage from "../pages/LordHousesPage";
 import LordHouseEditPage from "../pages/LordHouseEditPage";
@@ -96,6 +97,8 @@ export default function Router() {
       return <HouseInfoPage />;
     case "marketCompose":
       return <MarketComposePage />;
+    case "myApplications":
+      return <MyApplicationsPage />;
 
     /* ===== 임대인 모드 ===== */
     case "lordHome":

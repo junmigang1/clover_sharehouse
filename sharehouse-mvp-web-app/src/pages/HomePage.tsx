@@ -30,9 +30,9 @@ export default function HomePage() {
   const toggleChore = (id: string) => {
     setChecked((prev) => {
       const next = { ...prev, [id]: !prev[id] };
-      // cleaningDoneState 에도 반영 (CleaningRotationPage 와 공유)
+      // 로테이션 항목 id 로 기록 — CleaningRotationPage 가 같은 key 로 읽는다
       const chore = chores.find(c => c.id === id);
-      if (chore) cleaningDoneState[chore.title] = next[id];
+      if (chore?.rotationId) cleaningDoneState[chore.rotationId] = next[id];
       return next;
     });
   };

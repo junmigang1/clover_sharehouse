@@ -5,7 +5,7 @@ import Icon from "../components/Icon";
 import { HeartButton, FitBadge } from "../components/HouseBits";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
-import { houses, commuteTo } from "../data/houses";
+import { houses, commuteTo, openRoomCount } from "../data/houses";
 import { computeFit, tenureLabel, COMMUTE_HUBS } from "../data/lifestyle";
 import { won } from "../data/expenses";
 import type { House } from "../types";
@@ -115,7 +115,7 @@ export function HouseCard({
         </div>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
           {fit !== undefined && <FitBadge pct={fit} />}
-          {house.openRooms > 0 && <Tag variant="gray">빈방 {house.openRooms}</Tag>}
+          {openRoomCount(house) > 0 && <Tag variant="gray">빈방 {openRoomCount(house)}</Tag>}
         </div>
       </div>
 

@@ -15,7 +15,6 @@ const BLANK = {
   stationMins: 7,
   monthlyCost: 650000,
   deposit: 400,
-  openRooms: 1,
   genderPolicy: "혼성" as const,
   smoking: "비흡연" as const,
   pet: "불가" as const,
@@ -23,8 +22,6 @@ const BLANK = {
   desc: "",
 };
 
-
-/** 플랫폼별 더미 자동완성 데이터 — 인터뷰용 목업 */
 const GENDERS = ["여성전용", "남성전용", "혼성"] as const;
 const SMOKING = ["비흡연", "실외흡연", "허용"] as const;
 const PETS = ["불가", "가능", "환영"] as const;
@@ -42,7 +39,6 @@ export default function LordHouseEditPage({ id }: { id: string }) {
           stationMins: existing.stationMins,
           monthlyCost: existing.monthlyCost,
           deposit: existing.deposit,
-          openRooms: existing.openRooms,
           genderPolicy: existing.genderPolicy,
           smoking: existing.smoking,
           pet: existing.pet,
@@ -132,9 +128,6 @@ export default function LordHouseEditPage({ id }: { id: string }) {
               </Field>
               <Field label="보증금(만원)" style={{ flex: 1 }}>
                 <NumInput value={form.deposit} onChange={(v) => set("deposit", v)} step={50} />
-              </Field>
-              <Field label="빈방" style={{ flex: 0.7 }}>
-                <NumInput value={form.openRooms} onChange={(v) => set("openRooms", v)} />
               </Field>
             </div>
           </div>

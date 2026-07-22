@@ -25,20 +25,20 @@ export function memberById(id: string): Member {
   return members.find((member) => member.id === id) ?? me;
 }
 
-export const cleaningRotation: { day: string; memberId: string; area: string }[] = [
-  { day: "월", memberId: "m1", area: "주방 정리" },
-  { day: "화", memberId: "m2", area: "욕실" },
-  { day: "수", memberId: "m3", area: "거실" },
-  { day: "목", memberId: "me", area: "분리수거" },
-  { day: "금", memberId: "m4", area: "현관과 계단" },
-  { day: "토", memberId: "m5", area: "세탁실" },
-  { day: "일", memberId: "m1", area: "냉장고 점검" },
+export const cleaningRotation: { id: string; day: string; memberId: string; area: string }[] = [
+  { id: "r1", day: "월", memberId: "m1", area: "주방 정리" },
+  { id: "r2", day: "화", memberId: "m2", area: "욕실" },
+  { id: "r3", day: "수", memberId: "m3", area: "거실" },
+  { id: "r4", day: "목", memberId: "me", area: "분리수거" },
+  { id: "r5", day: "금", memberId: "m4", area: "현관과 계단" },
+  { id: "r6", day: "토", memberId: "m5", area: "세탁실" },
+  { id: "r7", day: "일", memberId: "m1", area: "냉장고 점검" },
 ];
 
 export const todayCleaner = memberById("me");
 export const todayArea = "분리수거";
 
-/** 청소 완료 여부 — 홈의 체크와 청소 로테이션이 공유하는 상태 */
+/** 청소 완료 여부 — key 는 cleaningRotation 의 id. 홈 집안일 체크와 로테이션 표가 공유한다 */
 export const cleaningDoneState: Record<string, boolean> = {};
 
 /** 현재 입주자들의 생활습관 평균 — 임대인 매물 편집에서 AI 추천값으로 사용 */

@@ -16,7 +16,26 @@ export default function LordReviewsPage() {
         {myHouses.map((house) => {
           const latest = house.reviews[0];
           const prev = house.reviews[1];
-          const delta = prev ? latest.satisfaction - prev.satisfaction : undefined;
+          const delta = latest && prev ? latest.satisfaction - prev.satisfaction : undefined;
+
+          if (!latest) {
+            return (
+              <div key={house.id}>
+                <SectionHeader title={house.name} />
+                <Card>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <Icon name="info" size={17} style={{ color: "var(--amber)", flex: "0 0 auto", marginTop: 1 }} />
+                    <div>
+                      <div style={{ fontWeight: 850, fontSize: 14 }}>아직 모인 응답이 없어요</div>
+                      <div className="caption" style={{ marginTop: 4, lineHeight: 1.55 }}>
+                        입주자가 반기 익명 응답을 남기면 집계가 표시됩니다.
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            );
+          }
 
           return (
             <div key={house.id}>

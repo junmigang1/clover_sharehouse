@@ -3,6 +3,7 @@ import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
 import { aiTools } from "../data/ai";
+import { myApplications, activeApplicationCount } from "../data/myApplications";
 
 const accentColor = {
   green: "var(--green)",
@@ -69,6 +70,13 @@ export default function AIPage() {
             sub={liked.length ? `${liked.length}곳 비교` : "비교하기"}
             badge={liked.length || undefined}
             onClick={() => navigate("compareHouses")}
+          />
+          <QuickCard
+            icon="send"
+            title="내 신청"
+            sub={myApplications.length ? `${myApplications.length}건 진행중` : "신청 내역"}
+            badge={activeApplicationCount() || undefined}
+            onClick={() => navigate("myApplications")}
           />
         </div>
 

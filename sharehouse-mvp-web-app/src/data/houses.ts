@@ -13,7 +13,6 @@ export const houses: House[] = [
     ageRange: "20대 중심",
     jobMix: "직장인·대학원생",
     memberCount: 6,
-    openRooms: 1,
     avgTenureMonths: 14,
     lifestyle: { sleep: 2, clean: 4, quiet: 2, social: 3, guests: 2 },
     smoking: "비흡연",
@@ -68,7 +67,6 @@ export const houses: House[] = [
     ageRange: "20대 후반",
     jobMix: "프리랜서·직장인",
     memberCount: 5,
-    openRooms: 2,
     avgTenureMonths: 9,
     lifestyle: { sleep: 3, clean: 3, quiet: 3, social: 4, guests: 3 },
     smoking: "실외흡연",
@@ -122,7 +120,6 @@ export const houses: House[] = [
     ageRange: "20대 초중반",
     jobMix: "대학생·사회초년생",
     memberCount: 8,
-    openRooms: 2,
     avgTenureMonths: 6,
     lifestyle: { sleep: 4, clean: 3, quiet: 4, social: 5, guests: 4 },
     smoking: "실외흡연",
@@ -179,7 +176,6 @@ export const houses: House[] = [
     ageRange: "20대 중후반",
     jobMix: "직장인 위주",
     memberCount: 6,
-    openRooms: 1,
     avgTenureMonths: 16,
     lifestyle: { sleep: 2, clean: 5, quiet: 2, social: 2, guests: 1 },
     smoking: "비흡연",
@@ -234,7 +230,6 @@ export const houses: House[] = [
     ageRange: "20~30대",
     jobMix: "대학원생·직장인",
     memberCount: 7,
-    openRooms: 3,
     avgTenureMonths: 8,
     lifestyle: { sleep: 3, clean: 3, quiet: 3, social: 3, guests: 2 },
     smoking: "실외흡연",
@@ -279,7 +274,6 @@ export const houses: House[] = [
     ageRange: "20대 후반~30대",
     jobMix: "IT·크리에이터",
     memberCount: 6,
-    openRooms: 1,
     avgTenureMonths: 11,
     lifestyle: { sleep: 4, clean: 4, quiet: 3, social: 3, guests: 3 },
     smoking: "비흡연",
@@ -312,6 +306,11 @@ export const houses: House[] = [
     ],
   },
 ];
+
+/** 빈방 수는 rooms 에서만 계산한다 (단일 소스) */
+export function openRoomCount(house: House): number {
+  return house.rooms.filter((r) => r.available).length;
+}
 
 export function houseById(id: string): House {
   return houses.find((h) => h.id === id) ?? houses[0];

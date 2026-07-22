@@ -3,19 +3,28 @@ import { Screen, TopBar } from "../components/Layout";
 import { Button, Card } from "../components/Primitives";
 import { useNavigation } from "../hooks/useNavigation";
 import { houseById } from "../data/houses";
+import { addMyApplication } from "../data/myApplications";
 
 const SLOTS = ["이번 주 토요일 오전 10시", "이번 주 토요일 오후 2시", "이번 주 일요일 오전 11시", "다음 주 평일 협의"];
 
 export default function TourRequestPage({ id }: { id: string }) {
-  const { goBack } = useNavigation();
+  const { navigate } = useNavigation();
   const house = houseById(id);
   const [slot, setSlot] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const submit = () => {
     if (!slot) return;
+    addMyApplication({
+      id: `my${Date.now()}`,
+      houseId: house.id,
+      kind: "투어",
+      when: slot,
+      status: "투어 요청",
+      submittedAt: "방금",
+    });
     setSubmitted(true);
-    setTimeout(goBack, 900);
+    setTimeout(() => navigate("myApplications"), 900);
   };
 
   return (

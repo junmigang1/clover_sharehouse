@@ -71,7 +71,7 @@ export function CleaningRotationPage() {
                 </div>
                 <div style={{ display:"flex", alignItems:"center", gap:6 }}>
                   {isToday && <Tag variant="violet">오늘</Tag>}
-                  {cleaningDoneState[row.area] && (
+                  {cleaningDoneState[row.id] && (
                     <span style={{ width:22, height:22, borderRadius:999, background:"var(--green)", color:"#fff", display:"grid", placeItems:"center" }}>
                       <Icon name="check" size={13} strokeWidth={2.8} />
                     </span>

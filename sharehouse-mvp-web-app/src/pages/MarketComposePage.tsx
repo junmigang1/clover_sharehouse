@@ -35,7 +35,7 @@ export default function MarketComposePage() {
     if (!canSubmit) return;
     const newItem: MarketItem = {
       id: `mkt${Date.now()}`,
-      category: category === "기타" ? "가전" : category,
+      category,
       title: title.trim(),
       price: isFree ? 0 : (typeof price === "number" ? price : 0),
       seller: "유빈",

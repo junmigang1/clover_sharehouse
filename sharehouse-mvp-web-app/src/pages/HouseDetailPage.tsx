@@ -4,7 +4,7 @@ import Icon from "../components/Icon";
 import { HeartButton, FitBadge, Bar, AxisTrack } from "../components/HouseBits";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
-import { houseById, commuteTo } from "../data/houses";
+import { houseById, commuteTo, openRoomCount } from "../data/houses";
 import { LIFESTYLE_AXES, computeFit, axisMatch, tenureLabel } from "../data/lifestyle";
 import { won } from "../data/expenses";
 
@@ -14,7 +14,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
   const { my, isLiked, toggleLike } = useSeeker();
   const fit = computeFit(house, my);
   const fitIsDefault = !my.set;
-  const latest = house.reviews[0];
+  const latest = house.reviews[0]; // 신규 매물은 후기가 없을 수 있다
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             <FitBadge pct={fit} isDefault={fitIsDefault} />
-            {house.openRooms > 0 && <Tag variant="gray">빈방 {house.openRooms}</Tag>}
+            {openRoomCount(house) > 0 && <Tag variant="gray">빈방 {openRoomCount(house)}</Tag>}
           </div>
         </div>
 
@@ -89,6 +89,19 @@ export default function HouseDetailPage({ id }: { id: string }) {
 
         {/* 익명 집계 후기 */}
         <SectionHeader title="입주자 익명 만족도" />
+        {!latest ? (
+          <Card>
+            <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+              <Icon name="info" size={17} style={{ color: "var(--amber)", flex: "0 0 auto", marginTop: 1 }} />
+              <div>
+                <div style={{ fontWeight: 850, fontSize: 14 }}>아직 모인 후기가 없어요</div>
+                <div className="caption" style={{ marginTop: 4, lineHeight: 1.55 }}>
+                  입주자들이 반기마다 익명으로 남기는 만족도가 쌓이면 여기에 표시됩니다. 그전까지는 생활습관 궁합과 직접 투어로 확인해 주세요.
+                </div>
+              </div>
+            </div>
+          </Card>
+        ) : (
         <Card>
           <div className="row-between">
             <div>
@@ -138,6 +151,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
             개인을 지목한 실시간 평가가 아니라, 기간마다 익명으로 모은 집계입니다.
           </div>
         </Card>
+        )}
 
         {/* 비용 · 통근 */}
         <SectionHeader title="비용과 통근" />
@@ -146,7 +160,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
             <Metric label="월 예상" value={won(house.monthlyCost)} />
             <Metric label="보증금" value={`${house.deposit}만원`} />
             <Metric label={`${my.commuteHub}까지`} value={`${commuteTo(house, my.commuteHub)}분`} />
-            <Metric label="빈방" value={`${house.openRooms}개`} />
+            <Metric label="빈방" value={`${openRoomCount(house)}개`} />
           </div>
         </Card>
 

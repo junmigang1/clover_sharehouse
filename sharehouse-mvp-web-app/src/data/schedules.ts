@@ -8,8 +8,8 @@ export const schedules: ScheduleItem[] = [
 ];
 
 export const chores: Chore[] = [
-  { id: "c1", title: "분리수거장에 재활용품 내놓기", assigneeId: "me", done: false, cycle: "오늘 밤 9시 전" },
+  { id: "c1", title: "분리수거장에 재활용품 내놓기", assigneeId: "me", done: false, cycle: "오늘 밤 9시 전", rotationId: "r4" },
   { id: "c2", title: "공용 세제 채워두기", assigneeId: "me", done: true, cycle: "매주 목요일" },
-  { id: "c3", title: "주방 상판 닦기", assigneeId: "m1", done: false, cycle: "매일" },
-  { id: "c4", title: "욕실 비품 확인", assigneeId: "m2", done: false, cycle: "주 2회" },
+  { id: "c3", title: "주방 상판 닦기", assigneeId: "m1", done: false, cycle: "매일", rotationId: "r1" },
+  { id: "c4", title: "욕실 비품 확인", assigneeId: "m2", done: false, cycle: "주 2회", rotationId: "r2" },
 ];

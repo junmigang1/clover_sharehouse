@@ -5,7 +5,7 @@ import { marketItems } from "../data/marketplace";
 import { won } from "../data/expenses";
 import type { MarketCategory, MarketItem } from "../types";
 
-const CATEGORIES: MarketCategory[] = ["전체", "책상", "의자", "침구", "주방", "가전"];
+const CATEGORIES: MarketCategory[] = ["전체", "책상", "의자", "침구", "주방", "가전", "기타"];
 
 export default function MarketplacePage() {
   const { navigate } = useNavigation();

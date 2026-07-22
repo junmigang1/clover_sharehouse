@@ -66,7 +66,7 @@ export default function AnonBoardPage() {
         }}>
           <Icon name="info" size={16} style={{ color: "var(--primary)", flex: "0 0 auto", marginTop: 1 }} />
           <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--primary-strong, var(--primary))", fontWeight: 700 }}>
-            작성자가 누구인지 알 수 없어요. 불편한 점, 바라는 점을 솔직하게 남겨주세요. 반응은 익명으로 남길 수 있어요.
+            이름은 표시되지 않지만, 같이 사는 사람이 적기 때문에 내용이나 말투로 누구인지 짐작될 수 있어요. 그 점을 감안해서 적어주세요.
           </div>
         </div>
 
@@ -76,7 +76,7 @@ export default function AnonBoardPage() {
           <textarea
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            placeholder="부담 없이 적어주세요. 작성자는 표시되지 않아요."
+            placeholder="바라는 점을 적어주세요. 사람을 지목하기보다 상황을 적으면 갈등이 덜 생겨요."
             rows={3}
             style={{
               width: "100%",

@@ -53,6 +53,8 @@ export interface Chore {
   assigneeId: string;
   done: boolean;
   cycle: string;
+  /** 대응하는 청소 로테이션 항목 id — 완료 체크가 로테이션 표에 반영된다 */
+  rotationId?: string;
 }
 
 export type CommunityCategory =
@@ -97,7 +99,8 @@ export type MarketCategory =
   | "의자"
   | "침구"
   | "주방"
-  | "가전";
+  | "가전"
+  | "기타";
 
 export interface MarketItem {
   id: string;
@@ -159,7 +162,6 @@ export interface House {
   ageRange: string; // "20대 중심"
   jobMix: string; // "직장인·대학원생"
   memberCount: number;
-  openRooms: number; // 현재 빈방 수
   avgTenureMonths: number; // 평균 거주 기간(개월)
   lifestyle: Record<LifestyleAxisKey, number>; // 1~5 집계값
   smoking: "비흡연" | "실외흡연" | "허용";

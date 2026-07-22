@@ -2,7 +2,7 @@ import { Screen, TopBar } from "../components/Layout";
 import { Button, Card, Tag } from "../components/Primitives";
 import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
-import { houseById } from "../data/houses";
+import { houseById, openRoomCount } from "../data/houses";
 import { myHouseIds, applicantsByHouse } from "../data/landlord";
 import { LIFESTYLE_AXES, tenureLabel } from "../data/lifestyle";
 import { won } from "../data/expenses";
@@ -21,7 +21,7 @@ export default function LordHousesPage() {
             return (
               <Card key={h.id} pad={false} style={{ overflow: "hidden" }}>
                 <div style={{ height: 74, background: h.bg, display: "flex", alignItems: "flex-end", padding: 12, gap: 6 }}>
-                  {h.openRooms > 0 ? <Tag variant="coral">빈방 {h.openRooms}</Tag> : <Tag variant="green">만실</Tag>}
+                  {openRoomCount(h) > 0 ? <Tag variant="coral">빈방 {openRoomCount(h)}</Tag> : <Tag variant="green">만실</Tag>}
                   {pending > 0 && <Tag variant="amber">신청 {pending}</Tag>}
                 </div>
 

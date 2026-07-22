@@ -4,9 +4,10 @@ import { Button, Card } from "../components/Primitives";
 import { useNavigation } from "../hooks/useNavigation";
 import { houseById } from "../data/houses";
 import { won } from "../data/expenses";
+import { addMyApplication } from "../data/myApplications";
 
 export default function MoveInRequestPage({ id }: { id: string }) {
-  const { goBack } = useNavigation();
+  const { navigate } = useNavigation();
   const house = houseById(id);
   const availableRooms = house.rooms.filter(r => r.available);
   const [roomId, setRoomId] = useState(availableRooms[0]?.id ?? "");
@@ -15,8 +16,18 @@ export default function MoveInRequestPage({ id }: { id: string }) {
 
   const submit = () => {
     if (!roomId || !moveInDate) return;
+    const room = availableRooms.find(r => r.id === roomId);
+    addMyApplication({
+      id: `my${Date.now()}`,
+      houseId: house.id,
+      kind: "입주",
+      when: moveInDate,
+      roomNumber: room?.number,
+      status: "검토 전",
+      submittedAt: "방금",
+    });
     setSubmitted(true);
-    setTimeout(goBack, 900);
+    setTimeout(() => navigate("myApplications"), 900);
   };
 
   return (
