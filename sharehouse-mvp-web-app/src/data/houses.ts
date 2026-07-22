@@ -22,6 +22,14 @@ export const houses: House[] = [
     emoji: "연남",
     bg: "linear-gradient(135deg,#ede9fe,#f0fdf4)",
     desc: "재택·야근 없는 아침형 입주자가 많아 밤이 조용합니다. 정산과 청소 로테이션이 앱으로 굴러가 규칙 마찰이 적은 편이에요.",
+    rooms: [
+      { id:"h1-101", number:"101호", type:"1인실", sizeSqm:8.5, monthlyCost:680000, privateBath:false, privateAC:true,  available:true,  floor:1, desc:"채광 좋은 남향, 책상·침대 포함" },
+      { id:"h1-102", number:"102호", type:"1인실", sizeSqm:7.8, monthlyCost:650000, privateBath:false, privateAC:true,  available:false, floor:1 },
+      { id:"h1-201", number:"201호", type:"1인실", sizeSqm:9.2, monthlyCost:720000, privateBath:true,  privateAC:true,  available:false, floor:2, desc:"개인 화장실, 넓은 수납공간" },
+      { id:"h1-202", number:"202호", type:"1.5인실", sizeSqm:11.0,monthlyCost:780000, privateBath:true,  privateAC:true,  available:false, floor:2 },
+      { id:"h1-301", number:"301호", type:"1인실", sizeSqm:8.0, monthlyCost:660000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h1-302", number:"302호", type:"1인실", sizeSqm:8.2, monthlyCost:670000, privateBath:false, privateAC:true,  available:false, floor:3 },
+    ],
     reviews: [
       {
         period: "2025 상반기",
@@ -69,6 +77,13 @@ export const houses: House[] = [
     emoji: "망원",
     bg: "linear-gradient(135deg,#e0f2fe,#fef9c3)",
     desc: "망원시장·한강이 가깝고 저녁에 같이 밥 먹는 분위기가 있습니다. 너무 붙지도 너무 각자도 아닌 중간 톤이에요.",
+    rooms: [
+      { id:"h2-101", number:"101호", type:"1인실", sizeSqm:7.5, monthlyCost:620000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h2-102", number:"102호", type:"1인실", sizeSqm:8.0, monthlyCost:640000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h2-201", number:"201호", type:"1인실", sizeSqm:9.0, monthlyCost:680000, privateBath:true,  privateAC:true,  available:false, floor:2, desc:"조용한 뒷편, 개인 화장실" },
+      { id:"h2-202", number:"202호", type:"2인실", sizeSqm:14.0,monthlyCost:980000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h2-301", number:"301호", type:"1인실", sizeSqm:8.5, monthlyCost:650000, privateBath:false, privateAC:true,  available:false, floor:3 },
+    ],
     reviews: [
       {
         period: "2025 상반기",
@@ -116,6 +131,16 @@ export const houses: House[] = [
     emoji: "홍대",
     bg: "linear-gradient(135deg,#fee2e2,#ede9fe)",
     desc: "라운지 모임·번개가 잦고 새 입주자도 금방 섞입니다. 왁자지껄한 걸 좋아하면 최고, 조용한 밤을 원하면 피로할 수 있어요.",
+    rooms: [
+      { id:"h3-101", number:"101호", type:"1인실", sizeSqm:6.5, monthlyCost:680000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h3-102", number:"102호", type:"1인실", sizeSqm:7.0, monthlyCost:700000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h3-201", number:"201호", type:"1인실", sizeSqm:8.0, monthlyCost:720000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h3-202", number:"202호", type:"1인실", sizeSqm:7.5, monthlyCost:700000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h3-301", number:"301호", type:"2인실", sizeSqm:13.0,monthlyCost:950000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h3-302", number:"302호", type:"1인실", sizeSqm:7.8, monthlyCost:710000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h3-401", number:"401호", type:"1인실", sizeSqm:8.2, monthlyCost:720000, privateBath:true,  privateAC:true,  available:false, floor:4, desc:"최상층, 채광 최고" },
+      { id:"h3-402", number:"402호", type:"1인실", sizeSqm:7.5, monthlyCost:700000, privateBath:false, privateAC:true,  available:false, floor:4 },
+    ],
     reviews: [
       {
         period: "2025 상반기",
@@ -163,6 +188,14 @@ export const houses: House[] = [
     emoji: "합정",
     bg: "linear-gradient(135deg,#dcfce7,#eff6ff)",
     desc: "청결 규칙이 확실하고 각자 생활을 존중합니다. 손님 초대가 거의 없고 밤이 특히 조용해 예민한 분에게 잘 맞아요.",
+    rooms: [
+      { id:"h4-101", number:"101호", type:"1인실", sizeSqm:9.0, monthlyCost:660000, privateBath:false, privateAC:true,  available:true,  floor:1, desc:"여성전용, 매우 조용한 1층" },
+      { id:"h4-201", number:"201호", type:"1인실", sizeSqm:10.0,monthlyCost:700000, privateBath:true,  privateAC:true,  available:false, floor:2 },
+      { id:"h4-202", number:"202호", type:"1인실", sizeSqm:9.5, monthlyCost:680000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h4-301", number:"301호", type:"1인실", sizeSqm:11.0,monthlyCost:730000, privateBath:true,  privateAC:true,  available:false, floor:3 },
+      { id:"h4-302", number:"302호", type:"1인실", sizeSqm:9.0, monthlyCost:670000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h4-401", number:"401호", type:"1인실", sizeSqm:9.8, monthlyCost:690000, privateBath:false, privateAC:true,  available:false, floor:4 },
+    ],
     reviews: [
       {
         period: "2025 상반기",
@@ -210,6 +243,15 @@ export const houses: House[] = [
     emoji: "성산",
     bg: "linear-gradient(135deg,#ccfbf1,#faf5ff)",
     desc: "특별히 튀는 색은 없지만 크게 어긋나는 것도 없는 무난한 집. 비용이 낮고 빈방이 여러 개라 입주 타이밍이 유연합니다.",
+    rooms: [
+      { id:"h5-101", number:"101호", type:"1인실", sizeSqm:7.0, monthlyCost:570000, privateBath:false, privateAC:false, available:true,  floor:1 },
+      { id:"h5-102", number:"102호", type:"1인실", sizeSqm:7.5, monthlyCost:590000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h5-201", number:"201호", type:"2인실", sizeSqm:13.5,monthlyCost:880000, privateBath:false, privateAC:true,  available:true,  floor:2, desc:"반려동물 환영, 여유로운 공간" },
+      { id:"h5-202", number:"202호", type:"1인실", sizeSqm:8.0, monthlyCost:600000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h5-301", number:"301호", type:"1인실", sizeSqm:8.5, monthlyCost:610000, privateBath:true,  privateAC:true,  available:false, floor:3 },
+      { id:"h5-302", number:"302호", type:"1인실", sizeSqm:7.8, monthlyCost:595000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h5-401", number:"401호", type:"1인실", sizeSqm:9.0, monthlyCost:620000, privateBath:false, privateAC:true,  available:false, floor:4 },
+    ],
     reviews: [
       {
         period: "2025 상반기",
@@ -246,6 +288,14 @@ export const houses: House[] = [
     emoji: "성수",
     bg: "linear-gradient(135deg,#f5f3ff,#ecfeff)",
     desc: "재택근무자가 많아 낮에도 집이 안정적이고, 저녁형이지만 서로 방해는 잘 안 합니다. 작업 공간이 필요한 사람에게 인기예요.",
+    rooms: [
+      { id:"h6-101", number:"101호", type:"1인실", sizeSqm:9.5, monthlyCost:720000, privateBath:false, privateAC:true,  available:true,  floor:1, desc:"재택 친화, 넓은 책상 공간" },
+      { id:"h6-201", number:"201호", type:"1인실", sizeSqm:10.0,monthlyCost:750000, privateBath:true,  privateAC:true,  available:false, floor:2 },
+      { id:"h6-202", number:"202호", type:"1인실", sizeSqm:9.0, monthlyCost:730000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h6-301", number:"301호", type:"1인실", sizeSqm:10.5,monthlyCost:770000, privateBath:true,  privateAC:true,  available:false, floor:3 },
+      { id:"h6-302", number:"302호", type:"1인실", sizeSqm:9.2, monthlyCost:740000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h6-401", number:"401호", type:"1인실", sizeSqm:11.0,monthlyCost:800000, privateBath:true,  privateAC:true,  available:false, floor:4, desc:"최상층, IT 종사자 선호" },
+    ],
     reviews: [
       {
         period: "2025 상반기",

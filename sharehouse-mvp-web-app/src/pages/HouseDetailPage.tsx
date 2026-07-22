@@ -150,12 +150,59 @@ export default function HouseDetailPage({ id }: { id: string }) {
           </div>
         </Card>
 
+        {/* 방 목록 */}
+        <SectionHeader title="빈방 정보" />
+        <div className="stack gap-10">
+          {house.rooms.filter(r => r.available).length === 0 ? (
+            <Card><div className="caption" style={{ textAlign:"center", padding:"12px 0" }}>현재 빈방이 없습니다.</div></Card>
+          ) : (
+            house.rooms.filter(r => r.available).map(room => (
+              <Card key={room.id}>
+                <div className="row-between" style={{ marginBottom: 8 }}>
+                  <div>
+                    <span style={{ fontWeight: 900, fontSize: 16 }}>{room.number}</span>
+                    <span className="caption" style={{ marginLeft: 8 }}>{room.type} · {room.floor}층 · {room.sizeSqm}m²</span>
+                  </div>
+                  <span className="num" style={{ fontWeight: 950, fontSize: 16, color: "var(--primary)" }}>{won(room.monthlyCost)}<span className="caption">/월</span></span>
+                </div>
+                <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+                  <Tag variant={room.privateBath ? "green" : "gray"}>{room.privateBath ? "개인화장실" : "공용화장실"}</Tag>
+                  <Tag variant={room.privateAC ? "green" : "gray"}>{room.privateAC ? "개인에어컨" : "공용에어컨"}</Tag>
+                </div>
+                {room.desc && <p className="caption" style={{ marginTop: 8, lineHeight: 1.5 }}>{room.desc}</p>}
+              </Card>
+            ))
+          )}
+        </div>
+
+        {/* 입주 중인 방 */}
+        {house.rooms.filter(r => !r.available).length > 0 && (
+          <>
+            <div className="caption" style={{ margin:"12px 4px 8px", fontWeight:850 }}>입주 중인 방</div>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+              {house.rooms.filter(r => !r.available).map(room => (
+                <div key={room.id} style={{ padding:"6px 12px", borderRadius:10, background:"var(--line)", fontSize:12.5, fontWeight:800 }}>
+                  {room.number} <span className="caption">{room.type}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
         <div style={{ display: "flex", gap: 10, marginTop: 18 }}>
           <Button variant="neutral" onClick={() => toggleLike(house.id)} style={{ flex: 1 }} icon={isLiked(house.id) ? "heart-fill" : "heart"}>
             {isLiked(house.id) ? "관심 등록됨" : "관심"}
           </Button>
-          <Button variant="primary" onClick={() => navigate("compareHouses")} style={{ flex: 1.4 }} icon="sparkle">
-            관심 하우스 비교
+          <Button variant="primary" onClick={() => navigate("compareHouses")} style={{ flex: 1 }} icon="sparkle">
+            하우스 비교
+          </Button>
+        </div>
+        <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
+          <Button variant="soft" onClick={() => navigate("tourRequest", { id: house.id })} style={{ flex: 1 }} icon="calendar">
+            투어 신청
+          </Button>
+          <Button variant="primary" onClick={() => navigate("moveInRequest", { id: house.id })} style={{ flex: 1 }} icon="send">
+            입주 신청
           </Button>
         </div>
       </Screen>

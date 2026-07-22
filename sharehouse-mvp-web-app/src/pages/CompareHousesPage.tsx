@@ -29,7 +29,7 @@ export default function CompareHousesPage() {
   const toggle = (id: string) => {
     setPicked((prev) => {
       if (prev.includes(id)) return prev.filter((x) => x !== id);
-      if (prev.length >= 3) return [...prev.slice(1), id];
+      if (prev.length >= 3) return prev; // 3개 초과 선택 불가, 먼저 해제 후 선택
       return [...prev, id];
     });
   };
@@ -38,9 +38,10 @@ export default function CompareHousesPage() {
 
   return (
     <>
-      <TopBar title="관심 하우스 비교" sub="관심 등록한 집을 생활습관 기준으로" />
+      <TopBar title="관심 하우스 비교" sub="관심 등록한 집 중 최대 3곳 선택" />
       <Screen>
-        <div className="caption" style={{ margin: "6px 2px 8px" }}>비교할 집 선택 (최대 3곳)</div>
+        <div className="caption" style={{ margin: "6px 2px 4px" }}>비교할 집 선택 (최대 3곳)</div>
+        <div className="caption" style={{ margin: "0 2px 8px", color: "var(--primary)" }}>관심 등록은 제한 없이 할 수 있어요. 여기서 비교할 3곳을 골라주세요.</div>
         <div className="chip-row" style={{ flexWrap: "wrap" }}>
           {likedHouses.map((h) => (
             <button key={h.id} className={`chip${picked.includes(h.id) ? " chip--active" : ""}`} onClick={() => toggle(h.id)}>

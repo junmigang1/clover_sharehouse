@@ -5,7 +5,8 @@ import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
 import { houses } from "../data/houses";
 import { LIFESTYLE_AXES } from "../data/lifestyle";
-import type { LifestyleAxisKey } from "../types";
+import type { LifestyleAxisKey, RoomInfo } from "../types";
+import { won } from "../data/expenses";
 
 const BLANK = {
   name: "",
@@ -49,6 +50,9 @@ export default function LordHouseEditPage({ id }: { id: string }) {
         }
       : { ...BLANK, lifestyle: { ...BLANK.lifestyle } }
   );
+  const [rooms, setRooms] = useState<RoomInfo[]>(
+    existing?.rooms ?? []
+  );
   const [saved, setSaved] = useState(false);
 
   const set = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) =>
@@ -56,6 +60,29 @@ export default function LordHouseEditPage({ id }: { id: string }) {
 
   const setAxis = (key: LifestyleAxisKey, value: number) =>
     setForm((f) => ({ ...f, lifestyle: { ...f.lifestyle, [key]: value } }));
+
+  const addRoom = () => {
+    const newRoom: RoomInfo = {
+      id: `r${Date.now()}`,
+      number: `${rooms.length + 1}01호`,
+      type: "1인실",
+      sizeSqm: 8.0,
+      monthlyCost: form.monthlyCost,
+      privateBath: false,
+      privateAC: true,
+      available: true,
+      floor: 1,
+    };
+    setRooms(prev => [...prev, newRoom]);
+  };
+
+  const updateRoom = (id: string, key: keyof RoomInfo, value: unknown) => {
+    setRooms(prev => prev.map(r => r.id === id ? { ...r, [key]: value } : r));
+  };
+
+  const removeRoom = (id: string) => {
+    setRooms(prev => prev.filter(r => r.id !== id));
+  };
 
   const save = () => {
     setSaved(true);

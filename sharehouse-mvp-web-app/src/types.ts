@@ -168,6 +168,7 @@ export interface House {
   bg: string;
   reviews: ReviewPeriod[]; // 최신이 배열 앞
   desc: string;
+  rooms: RoomInfo[];
 }
 
 /** 구하는 사람의 생활습관 · 조건 */
@@ -208,4 +209,18 @@ export interface Invite {
   code: string;
   status: "미사용" | "수락됨" | "만료";
   sentTo?: string;
+}
+
+/** 개별 방 정보 */
+export interface RoomInfo {
+  id: string;
+  number: string;        // "101호"
+  type: "1인실" | "2인실" | "1.5인실";
+  sizeSqm: number;       // 전용면적 m²
+  monthlyCost: number;
+  privateBath: boolean;
+  privateAC: boolean;
+  available: boolean;    // false = 입주자 있음
+  floor: number;
+  desc?: string;
 }
