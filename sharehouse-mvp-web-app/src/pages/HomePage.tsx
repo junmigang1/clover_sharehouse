@@ -6,8 +6,10 @@ import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
 import { chores, schedules } from "../data/schedules";
 import { announcements } from "../data/announcements";
+import { anonPosts } from "../data/anonPosts";
 import { myUnpaidTotal, won } from "../data/expenses";
-import { house, me, memberById, todayArea, todayCleaner } from "../data/members";
+import { house, me, memberById, cleaningRotation } from "../data/members";
+import { cleaningDoneState } from "../data/members";
 
 const scheduleColor: Record<string, string> = {
   청소: "#10b981",
@@ -18,18 +20,31 @@ const scheduleColor: Record<string, string> = {
 
 export default function HomePage() {
   const { navigate } = useNavigation();
-  const [cleanDone, setCleanDone] = useState(false);
   const [checked, setChecked] = useState<Record<string, boolean>>(
     Object.fromEntries(chores.map((chore) => [chore.id, chore.done]))
   );
   const unpaid = myUnpaidTotal(me.id);
   const myChores = chores.filter((chore) => chore.assigneeId === me.id);
 
+  // 집안일 완료 → 청소 로테이션 공유 상태 동기화
+  const toggleChore = (id: string) => {
+    setChecked((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      // cleaningDoneState 에도 반영 (CleaningRotationPage 와 공유)
+      const chore = chores.find(c => c.id === id);
+      if (chore) cleaningDoneState[chore.title] = next[id];
+      return next;
+    });
+  };
+
+  const doneCount = myChores.filter(c => checked[c.id]).length;
+  const totalCount = myChores.length;
+
   return (
     <>
       <TopBar
         title={house.name}
-        sub="셰어하우스 운영 대시보드"
+        sub="홈"
         actionIcon="bell"
         onAction={() => navigate("notifications")}
         showBack={false}
@@ -37,54 +52,69 @@ export default function HomePage() {
       <Screen>
         <div className="dashboard-layout">
           <div className="dashboard-main">
+
+            {/* 인사 + 진행률 */}
             <div style={{ padding: "8px 4px 2px" }}>
               <div style={{ color: "var(--text-2)", fontSize: 15, fontWeight: 750 }}>
                 좋은 저녁이에요, 유빈님
               </div>
-              <div style={{ marginTop: 4, fontSize: 30, fontWeight: 900, lineHeight: 1.08 }}>
-                오늘 하우스 운영은 82% 완료됐어요
+              <div style={{ marginTop: 4, fontSize: 26, fontWeight: 900, lineHeight: 1.15 }}>
+                오늘 집안일 {doneCount}/{totalCount} 완료했어요
               </div>
             </div>
 
-            <Card
-              pad={false}
-              style={{
-                marginTop: 16,
-                overflow: "hidden",
-                background: "linear-gradient(135deg,#7c3aed 0%,#9f67ff 58%,#d7c7ff 100%)",
-                color: "#fff",
-              }}
-            >
-              <div style={{ padding: 20 }}>
-                <div className="row-between">
-                  <Tag variant="violet">오늘의 할 일</Tag>
-                  <span style={{ fontSize: 13, fontWeight: 800, opacity: 0.82 }}>{todayArea}</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 16 }}>
-                  <Avatar member={todayCleaner} size={58} />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 21, fontWeight: 900 }}>{todayCleaner.name}</div>
-                    <div style={{ marginTop: 4, fontSize: 13, fontWeight: 750, opacity: 0.82 }}>
-                      {cleanDone ? "청소 완료로 기록했어요." : "밤 9시 전까지 분리수거를 완료해 주세요."}
+            {/* 1. 최근 공지 — 제일 위로 */}
+            <SectionHeader title="최근 공지" more="작성 +" onMore={() => navigate("announcementCompose")} />
+            <Card pad={false}>
+              {announcements.slice(0, 2).map((notice) => (
+                <ListRow
+                  key={notice.id}
+                  onClick={() => navigate("announcementDetail", { id: notice.id })}
+                  leading={<div className="icon-tile" style={{ width: 38, height: 38, background: "var(--primary-soft)", color: "var(--primary)" }}>공</div>}
+                  title={notice.title}
+                  sub={`${notice.anonymous ? "입주자 (익명)" : notice.author} · ${notice.date}`}
+                  trailing={<Tag variant={notice.tag === "긴급" ? "coral" : "violet"}>{notice.tag}</Tag>}
+                  chevron
+                />
+              ))}
+            </Card>
+
+            {/* 2. 익명 건의함 미리보기 — 공지 바로 아래 */}
+            <SectionHeader title="익명 건의함" more="전체보기" onMore={() => navigate("anonBoard")} />
+            <Card pad={false}>
+              {anonPosts.slice(0, 2).map((post) => (
+                <div
+                  key={post.id}
+                  className="row pressable"
+                  onClick={() => navigate("anonBoard")}
+                  style={{ padding: "13px 16px", gap: 12 }}
+                >
+                  <div style={{ width: 32, height: 32, borderRadius: 999, background: "var(--line)", display: "grid", placeItems: "center", flex: "0 0 auto" }}>
+                    <Icon name="user" size={16} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 13.5, fontWeight: 700, lineHeight: 1.5, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+                      {post.body}
+                    </div>
+                    <div className="caption" style={{ marginTop: 4, display: "flex", gap: 8 }}>
+                      {Object.entries(post.reactions).map(([r, n]) => n > 0 && (
+                        <span key={r}>{r} {n}</span>
+                      ))}
                     </div>
                   </div>
+                  <Icon name="chevron-right" size={18} style={{ color: "var(--primary)", flex: "0 0 auto" }} />
                 </div>
-                <button
-                  className={`btn btn--block ${cleanDone ? "btn--neutral" : "btn--primary"}`}
-                  style={{ marginTop: 16, boxShadow: "none" }}
-                  onClick={() => setCleanDone((value) => !value)}
-                >
-                  {cleanDone ? (
-                    <>
-                      <Icon name="check-circle" size={19} /> 완료됨
-                    </>
-                  ) : (
-                    "청소 완료 표시"
-                  )}
-                </button>
+              ))}
+              <div
+                className="pressable"
+                onClick={() => navigate("anonBoard")}
+                style={{ padding: "12px 16px", borderTop: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 8, color: "var(--primary)", fontWeight: 850, fontSize: 13 }}
+              >
+                <Icon name="plus" size={15} /> 익명으로 글 남기기
               </div>
             </Card>
 
+            {/* 3. 정산 */}
             <div className="metric-grid">
               <MetricCard label="미정산 금액" value={won(unpaid)} tone="coral" onClick={() => navigate("expenses")} />
               <MetricCard label="활성 멤버" value={`${house.members}/6명`} tone="violet" onClick={() => navigate("members")} />
@@ -94,9 +124,7 @@ export default function HomePage() {
             <Card onClick={() => navigate("expenses")}>
               <div className="row-between">
                 <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <div className="icon-tile" style={{ background: "var(--coral-soft)", color: "var(--coral)" }}>
-                    ₩
-                  </div>
+                  <div className="icon-tile" style={{ background: "var(--coral-soft)", color: "var(--coral)" }}>₩</div>
                   <div>
                     <div style={{ fontWeight: 850, fontSize: 15 }}>이번 달 정산하기</div>
                     <div className="caption" style={{ marginTop: 3 }}>공과금, 생활용품, 인터넷을 나눠 정산해요</div>
@@ -105,24 +133,11 @@ export default function HomePage() {
                 <Icon name="chevron-right" size={20} style={{ color: "var(--primary)" }} />
               </div>
             </Card>
-
-            <SectionHeader title="최근 공지" more="작성 +" onMore={() => navigate("announcementCompose")} />
-            <Card pad={false}>
-              {announcements.slice(0, 2).map((notice) => (
-                <ListRow
-                  key={notice.id}
-                  onClick={() => navigate("announcementDetail", { id: notice.id })}
-                  leading={<div className="icon-tile" style={{ width: 38, height: 38, background: "var(--primary-soft)", color: "var(--primary)" }}>공</div>}
-                  title={notice.title}
-                  sub={`${notice.author} · ${notice.date}`}
-                  trailing={<Tag variant={notice.tag === "긴급" ? "coral" : "violet"}>{notice.tag}</Tag>}
-                  chevron
-                />
-              ))}
-            </Card>
           </div>
 
           <aside className="dashboard-side">
+
+            {/* 4. 다가오는 일정 */}
             <SectionHeader title="다가오는 일정" />
             <Card pad={false}>
               {schedules.map((item) => (
@@ -136,7 +151,8 @@ export default function HomePage() {
               ))}
             </Card>
 
-            <SectionHeader title="내 집안일" />
+            {/* 5. 내 집안일 — 완료 체크 → 청소 로테이션 연동 */}
+            <SectionHeader title="내 집안일" more={`${doneCount}/${totalCount}`} onMore={() => navigate("cleaningRotation")} />
             <Card pad={false}>
               {myChores.map((chore) => {
                 const done = checked[chore.id];
@@ -144,18 +160,15 @@ export default function HomePage() {
                   <div
                     key={chore.id}
                     className="row pressable"
-                    onClick={() => setChecked((prev) => ({ ...prev, [chore.id]: !prev[chore.id] }))}
+                    onClick={() => toggleChore(chore.id)}
                   >
                     <span
                       style={{
-                        width: 27,
-                        height: 27,
-                        borderRadius: 999,
+                        width: 27, height: 27, borderRadius: 999,
                         border: done ? "none" : "2px solid var(--line)",
                         background: done ? "var(--primary)" : "transparent",
                         color: "#fff",
-                        display: "grid",
-                        placeItems: "center",
+                        display: "grid", placeItems: "center",
                       }}
                     >
                       {done && <Icon name="check" size={15} strokeWidth={2.8} />}
@@ -169,29 +182,27 @@ export default function HomePage() {
                   </div>
                 );
               })}
-            </Card>
-
-            <SectionHeader title="익명 건의함" />
-            <Card onClick={() => navigate("anonBoard")} style={{ background: "var(--violet-soft, var(--primary-soft))" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div className="icon-tile" style={{ width: 42, height: 42, background: "var(--primary-soft)", color: "var(--primary)" }}>
-                  <Icon name="comment" size={20} />
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 900, fontSize: 14.5 }}>불편한 점 익명으로 남기기</div>
-                  <div className="caption" style={{ marginTop: 2 }}>같은 집 입주자들만 볼 수 있어요</div>
-                </div>
-                <Icon name="chevron-right" size={18} style={{ color: "var(--primary)" }} />
+              <div
+                className="pressable"
+                onClick={() => navigate("cleaningRotation")}
+                style={{ padding: "11px 16px", borderTop: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, color: "var(--primary)", fontWeight: 850, fontSize: 13 }}
+              >
+                <Icon name="calendar" size={14} /> 청소 로테이션 전체 보기
               </div>
             </Card>
 
+            {/* 6. 하우스 멤버 */}
             <SectionHeader title="하우스 멤버" more="전체" onMore={() => navigate("members")} />
             <Card>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {["m1", "m2", "m3", "m4", "m5", "me"].map((id) => {
                   const member = memberById(id);
                   return (
-                    <div key={id} style={{ textAlign: "center" }}>
+                    <div
+                      key={id}
+                      style={{ textAlign: "center", cursor: id !== "me" ? "pointer" : "default" }}
+                      onClick={() => id !== "me" && navigate("memberChat", { id })}
+                    >
                       <Avatar member={member} size={42} />
                       <div className="caption" style={{ marginTop: 7, fontWeight: 800 }}>
                         {member.name.slice(1)}
@@ -208,17 +219,7 @@ export default function HomePage() {
   );
 }
 
-function MetricCard({
-  label,
-  value,
-  tone,
-  onClick,
-}: {
-  label: string;
-  value: string;
-  tone: "coral" | "violet";
-  onClick: () => void;
-}) {
+function MetricCard({ label, value, tone, onClick }: { label: string; value: string; tone: "coral" | "violet"; onClick: () => void; }) {
   return (
     <Card onClick={onClick}>
       <div className="caption" style={{ fontWeight: 800 }}>{label}</div>

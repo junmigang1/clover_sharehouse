@@ -37,3 +37,6 @@ export const cleaningRotation: { day: string; memberId: string; area: string }[]
 
 export const todayCleaner = memberById("me");
 export const todayArea = "분리수거";
+
+/** 청소 완료 여부 — 홈의 체크와 청소 로테이션이 공유하는 상태 */
+export const cleaningDoneState: Record<string, boolean> = {};

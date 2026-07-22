@@ -3,12 +3,14 @@ import { Screen, TopBar } from "../components/Layout";
 import { Card, ListRow, SectionHeader, Tag } from "../components/Primitives";
 import Avatar from "../components/Avatar";
 import Icon from "../components/Icon";
-import { cleaningRotation, house, me, memberById, members } from "../data/members";
+import { cleaningRotation, house, me, memberById, members, cleaningDoneState } from "../data/members";
+import { useNavigation } from "../hooks/useNavigation";
 
 export function MembersPage() {
+  const { navigate } = useNavigation();
   return (
     <>
-      <TopBar title="하우스 멤버" sub={`${house.name} · ${members.length}명`} />
+      <TopBar title="하우스 멤버" sub={`${house.name} · ${members.length}명`} actionIcon="community" onAction={() => navigate("memberChat")} />
       <Screen>
         <Card pad={false} style={{ marginTop: 8 }}>
           {members.map((member) => (
@@ -24,7 +26,7 @@ export function MembersPage() {
               sub={`${member.room} · ${member.role} · ${member.joined}`}
               trailing={
                 member.id !== me.id ? (
-                  <button className="btn btn--soft btn--sm">
+                  <button className="btn btn--soft btn--sm" onClick={() => navigate("memberChat", { id: member.id })}>
                     <Icon name="comment" size={15} /> 채팅
                   </button>
                 ) : undefined
@@ -67,7 +69,14 @@ export function CleaningRotationPage() {
                   <div className="row__title" style={{ fontSize: 14.5 }}>{member.name}</div>
                   <div className="row__sub">{row.area}</div>
                 </div>
-                {isToday && <Tag variant="violet">오늘</Tag>}
+                <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                  {isToday && <Tag variant="violet">오늘</Tag>}
+                  {cleaningDoneState[row.area] && (
+                    <span style={{ width:22, height:22, borderRadius:999, background:"var(--green)", color:"#fff", display:"grid", placeItems:"center" }}>
+                      <Icon name="check" size={13} strokeWidth={2.8} />
+                    </span>
+                  )}
+                </div>
               </div>
             );
           })}

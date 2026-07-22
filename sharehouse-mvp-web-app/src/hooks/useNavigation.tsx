@@ -33,6 +33,7 @@ export type RouteKey =
   | "anonBoard"
   | "tourRequest"
   | "moveInRequest"
+  | "memberChat"
   /* ===== 임대인 모드 ===== */
   | "lordHome"
   | "lordHouses"
@@ -85,6 +86,7 @@ const ROUTE_TAB: Record<RouteKey, TabKey> = {
   anonBoard: "home",
   tourRequest: "ai",
   moveInRequest: "ai",
+  memberChat: "home",
   lordHome: "lordHome",
   lordHouses: "lordHouses",
   lordHouseEdit: "lordHouses",
