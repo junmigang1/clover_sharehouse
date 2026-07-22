@@ -6,6 +6,7 @@ export interface Member {
   emoji?: string;
   role?: string;
   joined?: string;
+  lifestyle?: { sleep: number; clean: number; quiet: number; social: number; guests: number };
 }
 
 export interface Announcement {

@@ -3,6 +3,7 @@ import { Screen, TopBar } from "../components/Layout";
 import { Button, Card, SectionHeader, Tag } from "../components/Primitives";
 import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
+import { calcAverageLifestyle } from "../data/members";
 import { houses } from "../data/houses";
 import { LIFESTYLE_AXES } from "../data/lifestyle";
 import type { LifestyleAxisKey, RoomInfo } from "../types";
@@ -54,9 +55,27 @@ export default function LordHouseEditPage({ id }: { id: string }) {
     existing?.rooms ?? []
   );
   const [saved, setSaved] = useState(false);
+  const [autoCalcDone, setAutoCalcDone] = useState(false);
+  const [autoCalcLoading, setAutoCalcLoading] = useState(false);
 
   const set = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
+
+  const autoCalc = () => {
+    setAutoCalcLoading(true);
+    setTimeout(() => {
+      const avg = calcAverageLifestyle();
+      setForm(f => ({ ...f, lifestyle: {
+        sleep: Math.round(avg.sleep),
+        clean: Math.round(avg.clean),
+        quiet: Math.round(avg.quiet),
+        social: Math.round(avg.social),
+        guests: Math.round(avg.guests),
+      }}));
+      setAutoCalcLoading(false);
+      setAutoCalcDone(true);
+    }, 1000);
+  };
 
   const setAxis = (key: LifestyleAxisKey, value: number) =>
     setForm((f) => ({ ...f, lifestyle: { ...f.lifestyle, [key]: value } }));
@@ -137,6 +156,32 @@ export default function LordHouseEditPage({ id }: { id: string }) {
         </Card>
 
         <SectionHeader title="이 집의 생활습관" />
+        <div
+          style={{
+            display:"flex", alignItems:"center", gap:10, marginBottom:10,
+            padding:"12px 14px", borderRadius:16,
+            background: autoCalcDone ? "var(--green-soft)" : "var(--primary-soft)",
+          }}
+        >
+          <Icon name="sparkle" size={17} style={{ color: autoCalcDone ? "var(--green)" : "var(--primary)", flex:"0 0 auto" }} fill />
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{ fontWeight:850, fontSize:14, color: autoCalcDone ? "var(--green)" : "var(--primary-strong)" }}>
+              {autoCalcDone ? "입주자 평균으로 자동 계산됐어요" : "AI로 입주자 평균 자동 계산"}
+            </div>
+            <div className="caption" style={{ marginTop:2 }}>
+              {autoCalcDone ? "직접 수정할 수도 있어요." : "현재 입주자들의 성향을 평균내서 채워줘요."}
+            </div>
+          </div>
+          {!autoCalcDone && (
+            <button
+              onClick={autoCalc}
+              disabled={autoCalcLoading}
+              style={{ padding:"7px 14px", borderRadius:12, border:"none", background:"var(--primary)", color:"#fff", fontWeight:850, fontSize:13, cursor:"pointer", flex:"0 0 auto" }}
+            >
+              {autoCalcLoading ? "계산 중…" : "자동 계산"}
+            </button>
+          )}
+        </div>
         <Card>
           <div
             style={{

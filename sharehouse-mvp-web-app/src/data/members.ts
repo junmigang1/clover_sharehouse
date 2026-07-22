@@ -11,12 +11,12 @@ export const house = {
 };
 
 export const members: Member[] = [
-  { id: "m1", name: "박지나", room: "201호", color: "#8b5cf6", emoji: "지", role: "하우스 리더", joined: "12개월" },
-  { id: "m2", name: "이민우", room: "202호", color: "#f59e0b", emoji: "민", role: "정산 담당", joined: "8개월" },
-  { id: "m3", name: "김서연", room: "203호", color: "#06b6d4", emoji: "서", role: "커뮤니티", joined: "6개월" },
-  { id: "m4", name: "최다니엘", room: "301호", color: "#fb7185", emoji: "다", role: "마켓 담당", joined: "10개월" },
-  { id: "m5", name: "정하나", room: "302호", color: "#22c55e", emoji: "하", role: "비품 담당", joined: "3개월" },
-  { id: "me", name: "한유빈", room: "303호", color: "#7c3aed", emoji: "유", role: "입주자", joined: "8개월" },
+  { id: "m1", lifestyle: { sleep: 2, clean: 5, quiet: 2, social: 3, guests: 2 }, name: "박지나", room: "201호", color: "#8b5cf6", emoji: "지", role: "하우스 리더", joined: "12개월" },
+  { id: "m2", lifestyle: { sleep: 3, clean: 3, quiet: 3, social: 3, guests: 3 }, name: "이민우", room: "202호", color: "#f59e0b", emoji: "민", role: "정산 담당", joined: "8개월" },
+  { id: "m3", lifestyle: { sleep: 4, clean: 3, quiet: 4, social: 5, guests: 4 }, name: "김서연", room: "203호", color: "#06b6d4", emoji: "서", role: "커뮤니티", joined: "6개월" },
+  { id: "m4", lifestyle: { sleep: 3, clean: 4, quiet: 3, social: 4, guests: 3 }, name: "최다니엘", room: "301호", color: "#fb7185", emoji: "다", role: "마켓 담당", joined: "10개월" },
+  { id: "m5", lifestyle: { sleep: 2, clean: 4, quiet: 2, social: 2, guests: 1 }, name: "정하나", room: "302호", color: "#22c55e", emoji: "하", role: "비품 담당", joined: "3개월" },
+  { id: "me", lifestyle: { sleep: 2, clean: 4, quiet: 3, social: 4, guests: 2 }, name: "한유빈", room: "303호", color: "#7c3aed", emoji: "유", role: "입주자", joined: "8개월" },
 ];
 
 export const me = members[5];
@@ -40,3 +40,15 @@ export const todayArea = "분리수거";
 
 /** 청소 완료 여부 — 홈의 체크와 청소 로테이션이 공유하는 상태 */
 export const cleaningDoneState: Record<string, boolean> = {};
+
+/** 현재 입주자들의 생활습관 평균 — 임대인 매물 편집에서 AI 추천값으로 사용 */
+export function calcAverageLifestyle(): { sleep: number; clean: number; quiet: number; social: number; guests: number } {
+  const ls = members.filter(m => m.lifestyle).map(m => m.lifestyle!);
+  if (!ls.length) return { sleep: 3, clean: 3, quiet: 3, social: 3, guests: 3 };
+  const keys: ("sleep"|"clean"|"quiet"|"social"|"guests")[] = ["sleep", "clean", "quiet", "social", "guests"];
+  const result = {} as { sleep: number; clean: number; quiet: number; social: number; guests: number };
+  keys.forEach(k => {
+    result[k] = Math.round((ls.reduce((sum, l) => sum + l[k], 0) / ls.length) * 10) / 10;
+  });
+  return result;
+}
