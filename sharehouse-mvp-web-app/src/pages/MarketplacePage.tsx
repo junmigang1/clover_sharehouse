@@ -14,7 +14,7 @@ export default function MarketplacePage() {
 
   return (
     <>
-      <TopBar title="마켓" sub="우리 집 · 새 입주자와 나누는 물품" actionIcon="plus" showBack={false} />
+      <TopBar title="마켓" sub="우리 집 · 새 입주자와 나누는 물품" actionIcon="plus" onAction={() => navigate("marketCompose")} showBack={false} />
       <div style={{ padding: "0 12px" }}>
         <div className="chip-row">
           {CATEGORIES.map((category) => (
@@ -75,7 +75,10 @@ function ItemCard({ item, onClick }: { item: MarketItem; onClick: () => void }) 
     <div className="pressable" onClick={onClick} role="button" style={{ cursor: "pointer", minWidth: 0 }}>
       <Placeholder item={item} />
       <div style={{ padding: "8px 1px 0" }}>
-        <div className="ellipsis" style={{ fontWeight: 850, fontSize: 14 }}>{item.title}</div>
+        <div style={{ display:"flex", alignItems:"center", gap:5 }}>
+          <div className="ellipsis" style={{ fontWeight: 850, fontSize: 14 }}>{item.title}</div>
+          {item.seller === "유빈" && <span style={{ fontSize:10, fontWeight:850, color:"var(--primary)", background:"var(--primary-soft)", padding:"2px 6px", borderRadius:999, flex:"0 0 auto" }}>내 물건</span>}
+        </div>
         <div className="num" style={{ fontWeight: 950, fontSize: 16, marginTop: 2 }}>
           {item.price === 0 ? <span style={{ color: "var(--primary)" }}>나눔</span> : won(item.price)}
         </div>

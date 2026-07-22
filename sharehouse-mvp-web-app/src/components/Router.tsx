@@ -26,6 +26,7 @@ import TourRequestPage from "../pages/TourRequestPage";
 import MoveInRequestPage from "../pages/MoveInRequestPage";
 import MemberChatPage from "../pages/MemberChatPage";
 import HouseInfoPage from "../pages/HouseInfoPage";
+import MarketComposePage from "../pages/MarketComposePage";
 import LordHomePage from "../pages/LordHomePage";
 import LordHousesPage from "../pages/LordHousesPage";
 import LordHouseEditPage from "../pages/LordHouseEditPage";
@@ -93,6 +94,8 @@ export default function Router() {
       return <MemberChatPage memberId={id || undefined} />;
     case "houseInfo":
       return <HouseInfoPage />;
+    case "marketCompose":
+      return <MarketComposePage />;
 
     /* ===== 임대인 모드 ===== */
     case "lordHome":

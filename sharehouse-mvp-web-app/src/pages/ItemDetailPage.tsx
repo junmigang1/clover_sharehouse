@@ -4,13 +4,20 @@ import { Tag } from "../components/Primitives";
 import Avatar from "../components/Avatar";
 import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
-import { marketItems } from "../data/marketplace";
+import { marketItems, updateMarketStatus } from "../data/marketplace";
 import { won } from "../data/expenses";
 import { Placeholder } from "./MarketplacePage";
 
 export function ItemDetailPage({ id }: { id: string }) {
   const { navigate } = useNavigation();
   const item = marketItems.find((entry) => entry.id === id) ?? marketItems[0];
+  const isMine = item.seller === "유빈";
+  const [status, setStatus] = useState(item.status);
+
+  const changeStatus = (next: typeof status) => {
+    setStatus(next);
+    updateMarketStatus(item.id, next);
+  };
 
   return (
     <>
@@ -21,7 +28,7 @@ export function ItemDetailPage({ id }: { id: string }) {
         <div style={{ padding: "16px 4px 0" }}>
           <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
             <Tag variant="gray">{item.category}</Tag>
-            <Tag variant={item.status === "판매중" ? "green" : "amber"}>{item.status}</Tag>
+            <Tag variant={status === "판매중" ? "green" : status === "예약중" ? "amber" : "gray"}>{status}</Tag>
           </div>
           <h1 style={{ fontSize: 23, fontWeight: 950, lineHeight: 1.25 }}>{item.title}</h1>
           <div className="num" style={{ fontSize: 28, fontWeight: 950, marginTop: 9 }}>
@@ -42,14 +49,34 @@ export function ItemDetailPage({ id }: { id: string }) {
         </div>
       </Screen>
 
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "12px 16px calc(14px + env(safe-area-inset-bottom))", background: "rgba(255,255,255,0.9)", backdropFilter: "blur(18px)", borderTop: "1px solid var(--line)", display: "flex", gap: 12, alignItems: "center" }}>
-        <button style={{ width: 48, height: 48, display: "grid", placeItems: "center", color: "var(--coral)" }} aria-label="관심 상품">
-          <Icon name="heart" size={26} />
-        </button>
-        <button className="btn btn--primary" style={{ flex: 1 }} onClick={() => navigate("itemChat", { id: item.id })} disabled={item.status === "거래완료"}>
-          <Icon name="comment" size={19} />
-          {item.status === "거래완료" ? "거래완료 상품" : "판매자와 채팅"}
-        </button>
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "12px 16px calc(14px + env(safe-area-inset-bottom))", background: "rgba(255,255,255,0.9)", backdropFilter: "blur(18px)", borderTop: "1px solid var(--line)", display: "flex", flexDirection: "column", gap: 8 }}>
+        {isMine ? (
+          <>
+            <div className="caption" style={{ textAlign:"center", fontWeight:800 }}>내 물건 · 상태 변경</div>
+            <div style={{ display:"flex", gap:8 }}>
+              {(["판매중","예약중","거래완료"] as const).map(st => (
+                <button
+                  key={st}
+                  className={`btn btn--sm ${status === st ? "btn--primary" : "btn--neutral"}`}
+                  style={{ flex:1 }}
+                  onClick={() => changeStatus(st)}
+                >
+                  {st}
+                </button>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div style={{ display:"flex", gap:12, alignItems:"center" }}>
+            <button style={{ width:48, height:48, display:"grid", placeItems:"center", color:"var(--coral)" }} aria-label="관심 상품">
+              <Icon name="heart" size={26} />
+            </button>
+            <button className="btn btn--primary" style={{ flex:1 }} onClick={() => navigate("itemChat", { id: item.id })} disabled={status === "거래완료"}>
+              <Icon name="comment" size={19} />
+              {status === "거래완료" ? "거래완료 상품" : "판매자와 채팅"}
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

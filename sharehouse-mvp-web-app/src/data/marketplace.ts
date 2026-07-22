@@ -77,3 +77,12 @@ export const marketItems: MarketItem[] = [
     status: "판매중",
   },
 ];
+
+export function addMarketItem(item: MarketItem) {
+  marketItems.unshift(item);
+}
+
+export function updateMarketStatus(id: string, status: MarketItem["status"]) {
+  const item = marketItems.find(i => i.id === id);
+  if (item) item.status = status;
+}
