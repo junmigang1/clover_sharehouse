@@ -88,7 +88,7 @@ function ItemCard({ item, onClick }: { item: MarketItem; onClick: () => void }) 
           {item.seller === "유빈" && <span style={{ fontSize:10, fontWeight:850, color:"var(--primary)", background:"var(--primary-soft)", padding:"2px 6px", borderRadius:999, flex:"0 0 auto" }}>내 물건</span>}
         </div>
         <div className="num" style={{ fontWeight: 950, fontSize: 16, marginTop: 2 }}>
-          {item.price === 0 ? <span style={{ color: "var(--primary)" }}>나눔</span> : won(item.price)}
+          {item.price === 0 ? <span style={{ color: "var(--primary)" }}>완료</span> : won(item.price)}
         </div>
         <div className="caption" style={{ marginTop: 4, display: "flex", alignItems: "center", gap: 5, minWidth: 0 }}>
           <span style={{ width: 14, height: 14, borderRadius: 999, background: item.sellerColor, display: "inline-block", flex: "0 0 auto" }} />

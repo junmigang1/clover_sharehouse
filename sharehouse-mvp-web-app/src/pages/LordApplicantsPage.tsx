@@ -28,7 +28,7 @@ export default function LordApplicantsPage() {
 
   return (
     <>
-      <TopBar title="입주 신청" sub="생활습관 궁합순" showBack={false} />
+      <TopBar title="입주 문의하기" sub="생활습관 궁합순" showBack={false} />
       <Screen>
         <div className="chip-row">
           {FILTERS.map((f) => (

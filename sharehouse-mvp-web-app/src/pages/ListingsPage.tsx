@@ -136,8 +136,6 @@ export function HouseCard({
         </div>
 
         <div style={{ display: "flex", gap: 14, flexWrap: "wrap", fontSize: 12.5, color: "var(--text)" }}>
-          <TrustStat icon="check-circle" label="만족도" value={`${house.reviews[0]?.satisfaction ?? "-"}%`} />
-          <TrustStat icon="user" label="평균 거주" value={tenureLabel(house.avgTenureMonths)} />
           <TrustStat icon="calendar" label="통근" value={`${commute}분`} />
         </div>
 

@@ -52,9 +52,6 @@ export default function LordHousesPage() {
                     <Button variant="neutral" sm onClick={() => navigate("lordHouseEdit", { id: h.id })} icon="settings" style={{ flex: 1 }}>
                       편집
                     </Button>
-                    <Button variant="neutral" sm onClick={() => navigate("lordInvite", { id: h.id })} icon="send" style={{ flex: 1 }}>
-                      초대
-                    </Button>
                     <Button variant="primary" sm onClick={() => navigate("lordApplicants")} icon="user" style={{ flex: 1 }}>
                       신청자
                     </Button>

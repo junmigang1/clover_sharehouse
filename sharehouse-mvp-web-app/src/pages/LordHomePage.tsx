@@ -52,7 +52,7 @@ export default function LordHomePage() {
           <StatCard label="운영 하우스" value={`${myHouses.length}곳`} onClick={() => navigate("lordHouses")} />
           <StatCard label="빈방" value={`${openRooms}개`} tone="coral" onClick={() => navigate("lordHouses")} />
           <StatCard label="신규 신청" value={`${pendingMine.length}건`} tone="amber" onClick={() => navigate("lordApplicants")} />
-          <StatCard label="미사용 초대" value={`${liveInvites}개`} onClick={() => navigate("lordInvite")} />
+          <StatCard label="전달 대기중" value={`${liveInvites}개`} onClick={() => navigate("lordInvite")} />
         </div>
 
         {pendingMine.length > 0 && (
