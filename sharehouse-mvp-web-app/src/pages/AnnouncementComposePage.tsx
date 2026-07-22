@@ -3,6 +3,7 @@ import { Screen, TopBar } from "../components/Layout";
 import { Button, Card } from "../components/Primitives";
 import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
+import { addAnnouncement } from "../data/announcements";
 
 const TAGS = ["공지", "긴급", "생활"] as const;
 type Tag = typeof TAGS[number];

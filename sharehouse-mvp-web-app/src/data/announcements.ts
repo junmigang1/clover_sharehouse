@@ -27,3 +27,7 @@ export const announcements: Announcement[] = [
     tag: "생활",
   },
 ];
+
+export function addAnnouncement(item: Announcement) {
+  announcements.unshift(item);
+}
