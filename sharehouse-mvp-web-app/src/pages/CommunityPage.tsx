@@ -15,12 +15,38 @@ const catVariant = (category: Post["category"]) =>
 export default function CommunityPage() {
   const { navigate } = useNavigation();
   const [cat, setCat] = useState<CommunityCategory>("전체");
-  const list = cat === "전체" ? posts : posts.filter((post) => post.category === cat);
+  const [search, setSearch] = useState("");
+  const filtered = (cat === "전체" ? posts : posts.filter(p => p.category === cat))
+    .filter(p => !search || p.title.includes(search) || p.body.includes(search));
 
   return (
     <>
       <TopBar title="커뮤니티" sub="함께 정하고 연결해요" actionIcon="plus" showBack={false} />
       <div style={{ padding: "0 12px" }}>
+        {/* 집 정보 진입 */}
+        <div
+          className="pressable"
+          role="button"
+          onClick={() => navigate("houseInfo")}
+          style={{ display:"flex", alignItems:"center", gap:10, padding:"11px 14px", marginBottom:10, borderRadius:16, background:"var(--primary-soft)", cursor:"pointer" }}
+        >
+          <Icon name="info" size={17} style={{ color:"var(--primary)" }} />
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{ fontWeight:850, fontSize:14, color:"var(--primary-strong)" }}>집 정보 공유 메모장</div>
+            <div className="caption" style={{ marginTop:1 }}>생활규칙 · 동네정보 · 분리수거 · 긴급연락</div>
+          </div>
+          <Icon name="chevron-right" size={17} style={{ color:"var(--primary)" }} />
+        </div>
+        {/* 검색 */}
+        <div style={{ position:"relative", marginBottom:8 }}>
+          <Icon name="search" size={16} style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"var(--text-3)", pointerEvents:"none" }} />
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="게시글 검색"
+            style={{ width:"100%", border:"1px solid var(--line)", borderRadius:14, padding:"10px 12px 10px 36px", fontSize:14, fontFamily:"var(--font)", background:"var(--bg)", color:"var(--text)", boxSizing:"border-box" }}
+          />
+        </div>
         <div className="chip-row">
           {CATEGORIES.map((category) => (
             <button key={category} className={`chip${cat === category ? " chip--active" : ""}`} onClick={() => setCat(category)}>
@@ -31,7 +57,7 @@ export default function CommunityPage() {
       </div>
       <Screen>
         <div className="stack gap-10" style={{ marginTop: 4 }}>
-          {list.map((post) => (
+          {filtered.map((post) => (
             <PostCard key={post.id} post={post} onClick={() => navigate("postDetail", { id: post.id })} />
           ))}
         </div>

@@ -16,6 +16,7 @@ const LANDLORD_TABS: Tab[] = [
   { key: "lordHome", label: "현황", icon: "home" },
   { key: "lordHouses", label: "내 매물", icon: "market" },
   { key: "lordApplicants", label: "신청", icon: "user" },
+  { key: "community", label: "커뮤니티", icon: "community" },
   { key: "lordReviews", label: "리포트", icon: "check-circle" },
 ];
 

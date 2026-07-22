@@ -224,3 +224,16 @@ export interface RoomInfo {
   floor: number;
   desc?: string;
 }
+
+/** 공유 메모장형 집 정보 항목 */
+export type HouseInfoCategory = "생활규칙" | "동네정보" | "쓰레기·재활용" | "긴급연락";
+
+export interface HouseInfoItem {
+  id: string;
+  category: HouseInfoCategory;
+  title: string;
+  body: string;
+  author: string;
+  updatedAt: string;
+  pinned?: boolean;
+}

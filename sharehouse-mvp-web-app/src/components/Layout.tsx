@@ -21,6 +21,7 @@ const LANDLORD_NAV: NavItem[] = [
   { key: "lordHome", label: "운영 현황", desc: "", icon: "home" },
   { key: "lordHouses", label: "내 매물", desc: "", icon: "market" },
   { key: "lordApplicants", label: "입주 신청", desc: "", icon: "user" },
+  { key: "community", label: "커뮤니티", desc: "", icon: "community" },
   { key: "lordReviews", label: "만족도 리포트", desc: "", icon: "check-circle" },
 ];
 
