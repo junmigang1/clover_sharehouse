@@ -44,6 +44,12 @@ export function MembersPage() {
 
 export function CleaningRotationPage() {
   const today = "목";
+  const [doneState, setDoneState] = useState<Record<string, boolean>>({});
+
+  const toggleDone = (id: string) => {
+    setDoneState(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
     <>
       <TopBar title="청소 로테이션" sub="이번 주" />
@@ -59,23 +65,39 @@ export function CleaningRotationPage() {
           {cleaningRotation.map((row) => {
             const member = memberById(row.memberId);
             const isToday = row.day === today;
+            const isDone = doneState[row.id] || false;
             return (
-              <div key={row.day} className="row" style={{ background: isToday ? "var(--primary-soft)" : "transparent" }}>
+              <div
+                key={row.day}
+                className="row pressable"
+                style={{ background: isToday ? "var(--primary-soft)" : "transparent", cursor: "pointer" }}
+                onClick={() => toggleDone(row.id)}
+                role="button"
+              >
                 <span style={{ width: 38, height: 38, borderRadius: 14, background: isToday ? "var(--primary)" : "var(--surface-2)", color: isToday ? "#fff" : "var(--text-2)", display: "grid", placeItems: "center", fontWeight: 950, fontSize: 13, flex: "0 0 auto" }}>
                   {row.day}
                 </span>
                 <Avatar member={member} size={34} />
-                <div className="row__body">
+                <div className="row__body" style={{ opacity: isDone ? 0.6 : 1, textDecoration: isDone ? "line-through" : "none" }}>
                   <div className="row__title" style={{ fontSize: 14.5 }}>{member.name}</div>
                   <div className="row__sub">{row.area}</div>
                 </div>
-                <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   {isToday && <Tag variant="violet">오늘</Tag>}
-                  {cleaningDoneState[row.id] && (
-                    <span style={{ width:22, height:22, borderRadius:999, background:"var(--green)", color:"#fff", display:"grid", placeItems:"center" }}>
-                      <Icon name="check" size={13} strokeWidth={2.8} />
-                    </span>
-                  )}
+                  <span
+                    style={{
+                      width: 22,
+                      height: 22,
+                      borderRadius: 999,
+                      background: isDone ? "var(--green)" : "var(--line)",
+                      color: isDone ? "#fff" : "transparent",
+                      display: "grid",
+                      placeItems: "center",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    {isDone && <Icon name="check" size={13} strokeWidth={2.8} />}
+                  </span>
                 </div>
               </div>
             );
