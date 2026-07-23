@@ -17,13 +17,50 @@ const accentSoft = {
   violet: "var(--primary-soft)",
 };
 
-type Phase = "input" | "loading" | "result";
+type Phase = "input" | "loading" | "result" | "checklist";
+
+const moveInChecklistItems = {
+  furniture: [
+    { id: "bed", label: "침대", checked: false },
+    { id: "desk", label: "책상", checked: false },
+    { id: "chair", label: "의자", checked: false },
+    { id: "closet", label: "옷장/서랍장", checked: false },
+    { id: "shelves", label: "선반", checked: false },
+  ],
+  bedding: [
+    { id: "sheets", label: "침구 세트", checked: false },
+    { id: "pillow", label: "베개", checked: false },
+    { id: "blanket", label: "담요", checked: false },
+    { id: "towel", label: "개인 수건", checked: false },
+  ],
+  kitchen: [
+    { id: "dishes", label: "그릇/찬기", checked: false },
+    { id: "utensils", label: "숟가락/젓가락", checked: false },
+    { id: "pots", label: "냄비/팬", checked: false },
+    { id: "cooker", label: "수저/도마", checked: false },
+  ],
+  confirm: [
+    { id: "wifi", label: "와이파이 설정", checked: false },
+    { id: "key", label: "열쇠 수령", checked: false },
+    { id: "contract", label: "계약서 확인", checked: false },
+    { id: "cleaning", label: "청소 로테이션 확인", checked: false },
+    { id: "payment", label: "첫 달 정산 방식 확인", checked: false },
+  ],
+};
 
 export default function AIToolPage({ id }: { id: string }) {
   const tool = aiToolById(id);
   const [input, setInput] = useState("");
-  const [phase, setPhase] = useState<Phase>("input");
+  const [phase, setPhase] = useState<Phase>(tool.id === "movein" ? "checklist" : "input");
   const [copied, setCopied] = useState(false);
+  const [checklist, setChecklist] = useState<Record<string, Record<string, boolean>>>(
+    tool.id === "movein" ? {
+      furniture: Object.fromEntries(moveInChecklistItems.furniture.map(i => [i.id, false])),
+      bedding: Object.fromEntries(moveInChecklistItems.bedding.map(i => [i.id, false])),
+      kitchen: Object.fromEntries(moveInChecklistItems.kitchen.map(i => [i.id, false])),
+      confirm: Object.fromEntries(moveInChecklistItems.confirm.map(i => [i.id, false])),
+    } : {}
+  );
   const accent = accentColor[tool.accent];
 
   const generate = () => {
@@ -59,7 +96,7 @@ export default function AIToolPage({ id }: { id: string }) {
           </div>
         </div>
 
-        {phase !== "result" && (
+        {phase !== "result" && phase !== "checklist" && (
           <>
             <div style={{ fontWeight: 850, fontSize: 14, margin: "22px 4px 10px" }}>
               {tool.inputLabel}
@@ -144,6 +181,76 @@ export default function AIToolPage({ id }: { id: string }) {
                 ) : (
                   "복사하고 공유"
                 )}
+              </button>
+            </div>
+          </>
+        )}
+
+        {phase === "checklist" && (
+          <>
+            <div style={{ margin: "20px 0 16px", display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ fontWeight: 950, fontSize: 16 }}>입주 준비물 확인</div>
+              <div className="caption" style={{ color: "var(--text-3)" }}>
+                {Object.entries(checklist).reduce((sum, [_, items]) => sum + Object.values(items).filter(Boolean).length, 0)} / {Object.entries(checklist).reduce((sum, [_, items]) => sum + Object.keys(items).length, 0)} 완료
+              </div>
+            </div>
+
+            {[
+              { key: "furniture", title: "🛏️ 가구", items: moveInChecklistItems.furniture },
+              { key: "bedding", title: "🛌 침구류", items: moveInChecklistItems.bedding },
+              { key: "kitchen", title: "🍽️ 주방용품", items: moveInChecklistItems.kitchen },
+              { key: "confirm", title: "✅ 입주 전 확인", items: moveInChecklistItems.confirm },
+            ].map(({ key, title, items }) => (
+              <div key={key} style={{ marginBottom: 16 }}>
+                <div style={{ fontWeight: 850, fontSize: 13, marginBottom: 8, color: "var(--text-2)" }}>{title}</div>
+                <div className="stack gap-6">
+                  {items.map((item) => (
+                    <label
+                      key={item.id}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        padding: "10px 12px",
+                        borderRadius: 12,
+                        background: checklist[key][item.id] ? accentSoft[tool.accent] : "var(--surface-2)",
+                        cursor: "pointer",
+                        transition: "all 0.15s",
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checklist[key][item.id] ?? false}
+                        onChange={() => {
+                          setChecklist((prev) => ({
+                            ...prev,
+                            [key]: { ...prev[key], [item.id]: !prev[key][item.id] },
+                          }));
+                        }}
+                        style={{
+                          width: 18,
+                          height: 18,
+                          cursor: "pointer",
+                          accentColor: accent,
+                        }}
+                      />
+                      <span style={{ flex: 1, textDecoration: checklist[key][item.id] ? "line-through" : "none", opacity: checklist[key][item.id] ? 0.6 : 1 }}>
+                        {item.label}
+                      </span>
+                      {checklist[key][item.id] && <Icon name="check" size={16} style={{ color: accent }} strokeWidth={3} />}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            <div style={{ margin: "20px 0 16px" }}>
+              <button 
+                className="btn btn--block"
+                style={{ background: accent, color: "#fff" }}
+                onClick={() => setPhase("input")}
+              >
+                다른 방법으로 준비하기
               </button>
             </div>
           </>
