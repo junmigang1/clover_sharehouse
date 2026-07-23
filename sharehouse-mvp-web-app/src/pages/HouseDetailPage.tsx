@@ -31,6 +31,17 @@ export default function HouseDetailPage({ id }: { id: string }) {
 
         <p style={{ margin: "14px 2px 0", fontSize: 14.5, lineHeight: 1.6, color: "var(--text)" }}>{house.desc}</p>
 
+        {openRoomCount(house) > 0 && (
+          <Card style={{ marginTop: 12, background: "var(--primary-soft)", border: "1px solid var(--primary)" }}>
+            <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <Icon name="info" size={17} style={{ color: "var(--primary)", flex: "0 0 auto", marginTop: 2 }} />
+              <div style={{ fontSize: 13.5, color: "var(--primary-strong)", lineHeight: 1.5 }}>
+                관심 등록한 {house.name}에 빈방이 <strong>{openRoomCount(house)}개</strong> 남았어요
+              </div>
+            </div>
+          </Card>
+        )}
+
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "12px 0 4px" }}>
           {house.vibeTags.map((t) => (
             <Tag key={t} variant="violet">{t}</Tag>
