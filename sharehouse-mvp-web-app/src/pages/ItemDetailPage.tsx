@@ -14,6 +14,7 @@ export function ItemDetailPage({ id }: { id: string }) {
   const isMine = item.seller === "유빈";
   const [status, setStatus] = useState(item.status);
   const [photoIdx, setPhotoIdx] = useState(0);
+  const [alerting, setAlerting] = useState(item.alerting ?? false);
 
   const changeStatus = (next: typeof status) => {
     setStatus(next);
@@ -101,13 +102,21 @@ export function ItemDetailPage({ id }: { id: string }) {
             </div>
           </>
         ) : (
-          <div style={{ display:"flex", gap:12, alignItems:"center" }}>
+          <div style={{ display:"flex", gap:12, alignItems:"center", flexWrap:"wrap" }}>
             <button style={{ width:48, height:48, display:"grid", placeItems:"center", color:"var(--coral)" }} aria-label="관심 상품">
               <Icon name="heart" size={26} />
             </button>
-            <button className="btn btn--primary" style={{ flex:1 }} onClick={() => navigate("itemChat", { id: item.id })} disabled={status === "거래완료"}>
+            <button className="btn btn--primary" style={{ flex:1, minWidth:140 }} onClick={() => navigate("itemChat", { id: item.id })} disabled={status === "거래완료"}>
               <Icon name="comment" size={19} />
               {status === "거래완료" ? "거래완료 상품" : "판매자와 채팅"}
+            </button>
+            <button 
+              className={`btn btn--sm ${alerting ? "btn--primary" : "btn--neutral"}`}
+              onClick={() => setAlerting(!alerting)}
+              title={alerting ? "구매 재촉 알림 중" : "구매 재촉하기"}
+              style={{ minWidth:80 }}
+            >
+              📢 {alerting ? "재촉 중" : "재촉"}
             </button>
           </div>
         )}

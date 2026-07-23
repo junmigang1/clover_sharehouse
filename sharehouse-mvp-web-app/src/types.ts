@@ -116,6 +116,7 @@ export interface MarketItem {
   bg: string;
   desc: string;
   status: "판매중" | "예약중" | "거래완료";
+  alerting?: boolean; // 구매 재촉 알림 활성화 여부
   /** 업로드한 사진 (data URL). 없으면 카테고리 플레이스홀더를 보여준다 */
   photos?: string[];
 }
