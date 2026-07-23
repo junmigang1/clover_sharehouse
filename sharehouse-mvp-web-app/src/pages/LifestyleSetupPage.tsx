@@ -3,10 +3,78 @@ import { Button, Card } from "../components/Primitives";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
 import { LIFESTYLE_AXES, COMMUTE_HUBS } from "../data/lifestyle";
+import { useState } from "react";
+
+interface ChipGridItem {
+  key: string;
+  left: { label: string; value: number };
+  right: { label: string; value: number };
+}
+
+const LIFESTYLE_CHIPS: ChipGridItem[] = [
+  {
+    key: "sleep",
+    left: { label: "아침형이에요", value: 1 },
+    right: { label: "밤에 활동해요", value: 5 },
+  },
+  {
+    key: "clean",
+    left: { label: "청결에 예민해요", value: 1 },
+    right: { label: "적당히 치우면 돼요", value: 5 },
+  },
+  {
+    key: "quiet",
+    left: { label: "밤엔 조용했으면", value: 1 },
+    right: { label: "북적여도 괜찮아요", value: 5 },
+  },
+  {
+    key: "social",
+    left: { label: "각자 생활 존중", value: 1 },
+    right: { label: "같이 어울리고 싶어요", value: 5 },
+  },
+  {
+    key: "guests",
+    left: { label: "손님 거의 안 불러요", value: 1 },
+    right: { label: "친구 종종 불러요", value: 5 },
+  },
+];
+
+const PREFERENCE_TAGS = [
+  { id: "noSmoke", label: "비흡연" },
+  { id: "female", label: "여성전용" },
+  { id: "privateBath", label: "개인 화장실" },
+  { id: "wfh", label: "재택근무 많아요" },
+];
+
+const PRIORITY_TAGS = [
+  { id: "commute", label: "통근이 가장 중요" },
+  { id: "cost", label: "비용이 가장 중요" },
+  { id: "longTerm", label: "오래 살 곳 찾아요" },
+];
 
 export default function LifestyleSetupPage() {
   const { goBack } = useNavigation();
   const { my, setAxis, setNoSmoke, setCommuteHub, markSet } = useSeeker();
+  const [preferences, setPreferences] = useState<Record<string, boolean>>({
+    noSmoke: my.noSmoke,
+    female: false,
+    privateBath: false,
+    wfh: false,
+  });
+  const [priorities, setPriorities] = useState<Record<string, boolean>>({
+    commute: false,
+    cost: false,
+    longTerm: false,
+  });
+
+  const togglePreference = (id: string) => {
+    setPreferences((p) => ({ ...p, [id]: !p[id] }));
+    if (id === "noSmoke") setNoSmoke(!preferences.noSmoke);
+  };
+
+  const togglePriority = (id: string) => {
+    setPriorities((p) => ({ ...p, [id]: !p[id] }));
+  };
 
   const save = () => {
     markSet();
@@ -17,87 +85,89 @@ export default function LifestyleSetupPage() {
     <>
       <TopBar title="내 생활습관" sub="맞는 집을 골라내는 기준이 돼요" />
       <Screen>
+        {/* 생활 리듬 칩 그리드 */}
         <Card>
-          <div className="stack gap-14">
-            {LIFESTYLE_AXES.map((axis) => (
-              <div key={axis.key}>
-                <div style={{ fontWeight: 850, fontSize: 14, marginBottom: 8 }}>{axis.label}</div>
-                <input
-                  type="range"
-                  min={1}
-                  max={5}
-                  step={1}
-                  value={my.axes[axis.key]}
-                  onChange={(e) => setAxis(axis.key, Number(e.target.value))}
-                  style={{ width: "100%", accentColor: "var(--primary)" }}
-                />
-                <div className="caption" style={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
-                  <span>{axis.left}</span>
-                  <span>{axis.right}</span>
+          <div className="stack gap-16">
+            {LIFESTYLE_CHIPS.map((item) => (
+              <div key={item.key}>
+                <div style={{ fontWeight: 850, fontSize: 13.5, marginBottom: 10, color: "var(--text)" }}>
+                  {LIFESTYLE_AXES.find((a) => a.key === item.key)?.label}
+                </div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button
+                    className={`chip${my.axes[item.key as keyof typeof my.axes] === item.left.value ? " chip--active" : ""}`}
+                    onClick={() => setAxis(item.key as any, item.left.value)}
+                    style={{ flex: 1, fontSize: 13 }}
+                  >
+                    {item.left.label}
+                  </button>
+                  <button
+                    className={`chip${my.axes[item.key as keyof typeof my.axes] === item.right.value ? " chip--active" : ""}`}
+                    onClick={() => setAxis(item.key as any, item.right.value)}
+                    style={{ flex: 1, fontSize: 13 }}
+                  >
+                    {item.right.label}
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </Card>
 
+        {/* 선호 조건 */}
         <Card style={{ marginTop: 12 }}>
-          <div
-            className="row-between pressable"
-            role="button"
-            onClick={() => setNoSmoke(!my.noSmoke)}
-            style={{ cursor: "pointer" }}
-          >
-            <div>
-              <div style={{ fontWeight: 850, fontSize: 14 }}>비흡연 하우스 선호</div>
-              <div className="caption" style={{ marginTop: 2 }}>흡연 허용 하우스는 궁합에서 낮게 잡아요</div>
-            </div>
-            <Toggle on={my.noSmoke} />
+          <div style={{ fontWeight: 850, fontSize: 13.5, marginBottom: 12, color: "var(--text)" }}>선호 조건</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {PREFERENCE_TAGS.map((tag) => (
+              <button
+                key={tag.id}
+                className={`chip chip--sm${preferences[tag.id] ? " chip--active" : ""}`}
+                onClick={() => togglePreference(tag.id)}
+                style={{ fontSize: 12.5 }}
+              >
+                {tag.label}
+              </button>
+            ))}
           </div>
         </Card>
 
-        <div style={{ fontWeight: 850, fontSize: 14, margin: "18px 4px 10px" }}>통근 목적지</div>
+        {/* 우선순위 */}
+        <Card style={{ marginTop: 12 }}>
+          <div style={{ fontWeight: 850, fontSize: 13.5, marginBottom: 12, color: "var(--text)" }}>우선순위</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {PRIORITY_TAGS.map((tag) => (
+              <button
+                key={tag.id}
+                className={`chip chip--sm${priorities[tag.id] ? " chip--active" : ""}`}
+                onClick={() => togglePriority(tag.id)}
+                style={{ fontSize: 12.5 }}
+              >
+                {tag.label}
+              </button>
+            ))}
+          </div>
+        </Card>
+
+        {/* 통근 목적지 */}
+        <div style={{ fontWeight: 850, fontSize: 13.5, margin: "18px 4px 10px", color: "var(--text)" }}>
+          통근 목적지
+        </div>
         <div className="chip-row">
           {COMMUTE_HUBS.map((hub) => (
-            <button key={hub} className={`chip${my.commuteHub === hub ? " chip--active" : ""}`} onClick={() => setCommuteHub(hub)}>
+            <button
+              key={hub}
+              className={`chip${my.commuteHub === hub ? " chip--active" : ""}`}
+              onClick={() => setCommuteHub(hub)}
+            >
               {hub}
             </button>
           ))}
         </div>
 
-        <Button variant="primary" block onClick={save} icon="check" style={{ marginTop: 22 }}>
+        <Button variant="primary" block onClick={save} icon="check" style={{ marginTop: 24 }}>
           저장하고 맞는 집 보기
         </Button>
       </Screen>
     </>
-  );
-}
-
-function Toggle({ on }: { on: boolean }) {
-  return (
-    <span
-      style={{
-        width: 46,
-        height: 28,
-        borderRadius: 999,
-        background: on ? "var(--primary)" : "var(--line)",
-        position: "relative",
-        transition: "background 0.2s",
-        flex: "0 0 auto",
-      }}
-    >
-      <span
-        style={{
-          position: "absolute",
-          top: 3,
-          left: on ? 21 : 3,
-          width: 22,
-          height: 22,
-          borderRadius: 999,
-          background: "#fff",
-          boxShadow: "var(--shadow-sm)",
-          transition: "left 0.2s",
-        }}
-      />
-    </span>
   );
 }
