@@ -133,6 +133,9 @@ export default function LordHouseEditPage({ id }: { id: string }) {
             <div style={{ display: "flex", gap: 10 }}>
               <Field label="월 예상(원)" style={{ flex: 1 }}>
                 <NumInput value={form.monthlyCost} onChange={(v) => set("monthlyCost", v)} step={10000} />
+                <div className="caption" style={{ marginTop: 6, color: "var(--primary)", fontWeight: 700 }}>
+                  실제 범위: {priceRange()}
+                </div>
               </Field>
               <Field label="보증금(만원)" style={{ flex: 1 }}>
                 <NumInput value={form.deposit} onChange={(v) => set("deposit", v)} step={50} />
