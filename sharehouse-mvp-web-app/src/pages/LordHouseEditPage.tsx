@@ -104,6 +104,14 @@ export default function LordHouseEditPage({ id }: { id: string }) {
     setTimeout(goBack, 900);
   };
 
+  const priceRange = () => {
+    if (rooms.length === 0) return `${form.monthlyCost.toLocaleString("ko-KR")}원`;
+    const costs = rooms.map(r => r.monthlyCost);
+    const min = Math.min(...costs);
+    const max = Math.max(...costs);
+    return min === max ? `${min.toLocaleString("ko-KR")}원` : `${min.toLocaleString("ko-KR")}~${max.toLocaleString("ko-KR")}원`;
+  };
+
   return (
     <>
       <TopBar title={isNew ? "새 매물 등록" : "매물 편집"} sub={isNew ? "생활습관 성격까지 함께" : form.name} />

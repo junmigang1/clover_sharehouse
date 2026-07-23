@@ -175,6 +175,7 @@ export interface House {
   desc: string;
   rooms: RoomInfo[];
   viewCount: number; // 현재 조회 중인 입주자 수
+  likeCount: number; // 찜한 사람 수
 }
 
 /** 구하는 사람의 생활습관 · 조건 */
