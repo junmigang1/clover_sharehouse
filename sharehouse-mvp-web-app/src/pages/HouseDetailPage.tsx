@@ -4,7 +4,7 @@ import Icon from "../components/Icon";
 import { HeartButton, FitBadge, Bar, AxisTrack } from "../components/HouseBits";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
-import { houseById, commuteTo, openRoomCount } from "../data/houses";
+import { houseById, commuteTo, openRoomCount, priceRange } from "../data/houses";
 import { LIFESTYLE_AXES, computeFit, axisMatch, tenureLabel } from "../data/lifestyle";
 import { won } from "../data/expenses";
 
@@ -92,7 +92,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
         <SectionHeader title="비용과 통근" />
         <Card>
           <div className="metric-grid">
-            <Metric label="월 예상" value={won(house.monthlyCost)} />
+            <Metric label="월 예상" value={priceRange(house)} />
             <Metric label="보증금" value={`${house.deposit}만원`} />
             <Metric label={`${my.commuteHub}까지`} value={`${commuteTo(house, my.commuteHub)}분`} />
             <Metric label="빈방" value={`${openRoomCount(house)}개`} />

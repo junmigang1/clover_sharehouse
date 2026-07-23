@@ -312,6 +312,18 @@ export function openRoomCount(house: House): number {
   return house.rooms.filter((r) => r.available).length;
 }
 
+/** 집의 가격 범위를 "59만~78만원" 형식으로 반환 */
+export function priceRange(house: House): string {
+  if (house.rooms.length === 0) return "-";
+  const costs = house.rooms.map((r) => r.monthlyCost);
+  const min = Math.min(...costs);
+  const max = Math.max(...costs);
+  const formatPrice = (price: number) => {
+    return `${Math.floor(price / 10000)}만`;
+  };
+  return `${formatPrice(min)}~${formatPrice(max)}원`;
+}
+
 export function houseById(id: string): House {
   return houses.find((h) => h.id === id) ?? houses[0];
 }

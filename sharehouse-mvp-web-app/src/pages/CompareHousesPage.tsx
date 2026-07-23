@@ -5,7 +5,7 @@ import Icon from "../components/Icon";
 import { FitBadge } from "../components/HouseBits";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
-import { houseById, commuteTo } from "../data/houses";
+import { houseById, commuteTo, priceRange } from "../data/houses";
 import { LIFESTYLE_AXES, computeFit } from "../data/lifestyle";
 import { won } from "../data/expenses";
 
@@ -69,11 +69,9 @@ export default function CompareHousesPage() {
                 </tr>
               </thead>
               <tbody>
-                <Row label="월 예상" cells={cols.map((h) => won(h.monthlyCost))} />
+                <Row label="월 예상" cells={cols.map((h) => priceRange(h))} />
                 <Row label="보증금" cells={cols.map((h) => `${h.deposit}만`)} />
                 <Row label={`${my.commuteHub}까지`} cells={cols.map((h) => `${commuteTo(h, my.commuteHub)}분`)} />
-                <Row label="만족도" cells={cols.map((h) => `${h.reviews[0]?.satisfaction ?? "-"}%`)} />
-                <Row label="평균 거주" cells={cols.map((h) => `${h.avgTenureMonths}개월`)} />
                 <Row label="성별" cells={cols.map((h) => h.genderPolicy)} />
                 <Row label="흡연" cells={cols.map((h) => h.smoking)} />
                 <SectionRow label="생활습관" span={cols.length} />

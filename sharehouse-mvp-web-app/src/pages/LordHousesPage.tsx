@@ -2,10 +2,9 @@ import { Screen, TopBar } from "../components/Layout";
 import { Button, Card, Tag } from "../components/Primitives";
 import Icon from "../components/Icon";
 import { useNavigation } from "../hooks/useNavigation";
-import { houseById, openRoomCount } from "../data/houses";
+import { houseById, openRoomCount, priceRange } from "../data/houses";
 import { myHouseIds, applicantsByHouse } from "../data/landlord";
-import { LIFESTYLE_AXES, tenureLabel } from "../data/lifestyle";
-import { won } from "../data/expenses";
+import { LIFESTYLE_AXES } from "../data/lifestyle";
 
 export default function LordHousesPage() {
   const { navigate } = useNavigation();
@@ -32,10 +31,8 @@ export default function LordHousesPage() {
                   </div>
 
                   <div className="metric-grid" style={{ marginTop: 12 }}>
-                    <Metric label="월 예상" value={won(h.monthlyCost)} />
+                    <Metric label="월 예상" value={priceRange(h)} />
                     <Metric label="보증금" value={`${h.deposit}만`} />
-                    <Metric label="평균 거주" value={tenureLabel(h.avgTenureMonths)} />
-                    <Metric label="만족도" value={`${h.reviews[0]?.satisfaction ?? "-"}%`} />
                   </div>
 
                   <div className="divider" style={{ margin: "12px 0" }} />

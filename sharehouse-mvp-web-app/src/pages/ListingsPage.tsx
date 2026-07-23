@@ -5,7 +5,7 @@ import Icon from "../components/Icon";
 import { HeartButton, FitBadge } from "../components/HouseBits";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
-import { houses, commuteTo, openRoomCount } from "../data/houses";
+import { houses, commuteTo, openRoomCount, priceRange } from "../data/houses";
 import { computeFit, tenureLabel, COMMUTE_HUBS } from "../data/lifestyle";
 import { won } from "../data/expenses";
 import type { House } from "../types";
@@ -141,7 +141,7 @@ export function HouseCard({
 
         <div className="divider" style={{ margin: "12px 0" }} />
         <div className="row-between">
-          <span className="num" style={{ fontWeight: 950, fontSize: 17 }}>{won(house.monthlyCost)}<span className="caption" style={{ fontWeight: 700 }}> /월</span></span>
+          <span className="num" style={{ fontWeight: 950, fontSize: 17 }}>{priceRange(house)}</span>
           <span className="caption">보증금 {house.deposit}만</span>
         </div>
       </div>
