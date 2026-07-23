@@ -62,6 +62,28 @@ export const posts: Post[] = [
       { label: "필요할 때마다 구매", votes: 3 },
     ],
   },
+  {
+    id: "p7",
+    category: "맛집추천",
+    title: "홍대입구역 신한은행 건물 지하 회전초밥",
+    body: "싱싱하고 사람도 많은데 회전대 가격이 정말 싸요. 2500원짜리도 여러 개 있어서 가성비 최고입니다. 저녁에는 줄 서는 일도 많아요.",
+    author: "박지나",
+    authorColor: "#8b5cf6",
+    time: "7월 20일",
+    likes: 18,
+    comments: 5,
+  },
+  {
+    id: "p8",
+    category: "맛집추천",
+    title: "망원역 근처 돈까스 맛있음",
+    body: "더블 돈까스 세트 13,000원. 돈까스 맛이 진짜 좋고, 소스도 여러 종류가 있어서 선택할 수 있어요. 반찬도 푸짐하고 밥도 맛있습니다.",
+    author: "김서연",
+    authorColor: "#06b6d4",
+    time: "7월 19일",
+    likes: 22,
+    comments: 7,
+  },
 ];
 
 export const commentsByPost: Record<string, Comment[]> = {
@@ -70,5 +92,12 @@ export const commentsByPost: Record<string, Comment[]> = {
   ],
   p6: [
     { id: "c4", author: "한유빈", authorColor: "#7c3aed", body: "정기배송이면 매번 정산하기 편할 것 같아요.", time: "7월 16일" },
+  ],
+  p7: [
+    { id: "c5", author: "한유빈", authorColor: "#7c3aed", body: "오 여기 진짜 좋네요. 담주에 한번 가봐야겠다.", time: "7월 19일" },
+    { id: "c6", author: "최다니엘", authorColor: "#fb7185", body: "위치 어디였더라? 지하 맞아?", time: "7월 19일" },
+  ],
+  p8: [
+    { id: "c7", author: "박지나", authorColor: "#8b5cf6", body: "와 13,000원? 진짜 싼데. 다음에 런치로 가야겠다.", time: "7월 18일" },
   ],
 };

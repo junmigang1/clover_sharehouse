@@ -63,7 +63,8 @@ export type CommunityCategory =
   | "생활팁"
   | "동네추천"
   | "투표"
-  | "모임";
+  | "모임"
+  | "맛집추천";
 
 export interface PollOption {
   label: string;

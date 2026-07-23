@@ -7,10 +7,10 @@ import { useNavigation } from "../hooks/useNavigation";
 import { posts } from "../data/community";
 import type { CommunityCategory, Post } from "../types";
 
-const CATEGORIES: CommunityCategory[] = ["전체", "자유", "생활팁", "동네추천", "투표", "모임"];
+const CATEGORIES: CommunityCategory[] = ["전체", "자유", "생활팁", "동네추천", "투표", "모임", "맛집추천"];
 
 const catVariant = (category: Post["category"]) =>
-  category === "투표" ? "violet" : category === "모임" ? "amber" : category === "동네추천" ? "coral" : "green";
+  category === "투표" ? "violet" : category === "모임" ? "amber" : category === "동네추천" ? "coral" : category === "맛집추천" ? "coral" : "green";
 
 export default function CommunityPage() {
   const { navigate } = useNavigation();
