@@ -14,7 +14,6 @@ export default function HouseDetailPage({ id }: { id: string }) {
   const { my, isLiked, toggleLike } = useSeeker();
   const fit = computeFit(house, my);
   const fitIsDefault = !my.set;
-  const latest = house.reviews[0]; // 신규 매물은 후기가 없을 수 있다
 
   return (
     <>
@@ -87,71 +86,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
           <div className="caption">주요 구성 · {house.jobMix}</div>
         </Card>
 
-        {/* 익명 집계 후기 */}
-        <SectionHeader title="입주자 익명 만족도" />
-        {!latest ? (
-          <Card>
-            <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-              <Icon name="info" size={17} style={{ color: "var(--amber)", flex: "0 0 auto", marginTop: 1 }} />
-              <div>
-                <div style={{ fontWeight: 850, fontSize: 14 }}>아직 모인 후기가 없어요</div>
-                <div className="caption" style={{ marginTop: 4, lineHeight: 1.55 }}>
-                  입주자들이 반기마다 익명으로 남기는 만족도가 쌓이면 여기에 표시됩니다. 그전까지는 생활습관 궁합과 직접 투어로 확인해 주세요.
-                </div>
-              </div>
-            </div>
-          </Card>
-        ) : (
-        <Card>
-          <div className="row-between">
-            <div>
-              <div style={{ fontWeight: 900, fontSize: 15 }}>종합 만족도</div>
-              <div className="caption" style={{ marginTop: 2 }}>{latest.period} · 익명 {latest.responses}명 응답</div>
-            </div>
-            <div style={{ fontSize: 30, fontWeight: 950, color: "var(--primary)" }}>{latest.satisfaction}<span style={{ fontSize: 15 }}>%</span></div>
-          </div>
 
-          <div className="stack gap-10" style={{ marginTop: 14 }}>
-            {latest.scores.map((s) => (
-              <div key={s.label}>
-                <div className="row-between" style={{ marginBottom: 5 }}>
-                  <span style={{ fontSize: 13, fontWeight: 800 }}>{s.label}</span>
-                  <span className="num" style={{ fontSize: 13, fontWeight: 850 }}>{s.value}</span>
-                </div>
-                <Bar value={s.value} color={s.value >= 80 ? "var(--green)" : s.value >= 65 ? "var(--amber)" : "var(--coral)"} />
-              </div>
-            ))}
-          </div>
-
-          {latest.quote && (
-            <div style={{ marginTop: 14, padding: 12, borderRadius: 12, background: "var(--bg)", fontSize: 13.5, lineHeight: 1.55, color: "var(--text)" }}>
-              <Icon name="comment" size={14} style={{ color: "var(--primary)", marginRight: 6 }} />
-              {latest.quote}
-            </div>
-          )}
-
-          {house.reviews.length > 1 && (
-            <>
-              <div className="divider" style={{ margin: "14px 0 10px" }} />
-              <div className="caption" style={{ marginBottom: 8 }}>기간별 추이</div>
-              <div className="stack gap-8">
-                {house.reviews.map((r) => (
-                  <div key={r.period} className="row-between">
-                    <span style={{ fontSize: 12.5, color: "var(--text)" }}>{r.period}</span>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, width: "55%" }}>
-                      <div style={{ flex: 1 }}><Bar value={r.satisfaction} /></div>
-                      <span className="num" style={{ fontSize: 12.5, fontWeight: 800, width: 34, textAlign: "right" }}>{r.satisfaction}%</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-          <div className="caption" style={{ marginTop: 12, lineHeight: 1.5 }}>
-            개인을 지목한 실시간 평가가 아니라, 기간마다 익명으로 모은 집계입니다.
-          </div>
-        </Card>
-        )}
 
         {/* 비용 · 통근 */}
         <SectionHeader title="비용과 통근" />
