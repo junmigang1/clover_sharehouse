@@ -16,6 +16,7 @@ export default function CommunityPage() {
   const { navigate } = useNavigation();
   const [cat, setCat] = useState<CommunityCategory>("전체");
   const [search, setSearch] = useState("");
+  const [tab, setTab] = useState<"board" | "info">("board");
   const filtered = (cat === "전체" ? posts : posts.filter(p => p.category === cat))
     .filter(p => !search || p.title.includes(search) || p.body.includes(search));
 
@@ -23,44 +24,78 @@ export default function CommunityPage() {
     <>
       <TopBar title="커뮤니티" sub="함께 정하고 연결해요" actionIcon="plus" showBack={false} />
       <div style={{ padding: "0 12px" }}>
-        {/* 집 정보 진입 */}
-        <div
-          className="pressable"
-          role="button"
-          onClick={() => navigate("houseInfo")}
-          style={{ display:"flex", alignItems:"center", gap:10, padding:"11px 14px", marginBottom:10, borderRadius:16, background:"var(--primary-soft)", cursor:"pointer" }}
-        >
-          <Icon name="info" size={17} style={{ color:"var(--primary)" }} />
-          <div style={{ flex:1, minWidth:0 }}>
-            <div style={{ fontWeight:850, fontSize:14, color:"var(--primary-strong)" }}>집 정보 공유 메모장</div>
-            <div className="caption" style={{ marginTop:1 }}>생활규칙 · 동네정보 · 분리수거 · 긴급연락</div>
+        {/* 탭 전환 */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+          <button
+            className={`btn btn--sm ${tab === "board" ? "btn--primary" : "btn--neutral"}`}
+            onClick={() => setTab("board")}
+            style={{ flex: 1 }}
+          >
+            게시판
+          </button>
+          <button
+            className={`btn btn--sm ${tab === "info" ? "btn--primary" : "btn--neutral"}`}
+            onClick={() => setTab("info")}
+            style={{ flex: 1 }}
+          >
+            집 정보
+          </button>
+        </div>
+
+        {tab === "board" ? (
+          <>
+            {/* 검색 */}
+            <div style={{ position:"relative", marginBottom:8 }}>
+              <Icon name="search" size={16} style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"var(--text-3)", pointerEvents:"none" }} />
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="게시글 검색"
+                style={{ width:"100%", border:"1px solid var(--line)", borderRadius:14, padding:"10px 12px 10px 36px", fontSize:14, fontFamily:"var(--font)", background:"var(--bg)", color:"var(--text)", boxSizing:"border-box" }}
+              />
+            </div>
+            <div className="chip-row">
+              {CATEGORIES.map((category) => (
+                <button key={category} className={`chip${cat === category ? " chip--active" : ""}`} onClick={() => setCat(category)}>
+                  {category}
+                </button>
+              ))}
+            </div>
+          </>
+        ) : (
+          /* 집 정보 탭 */
+          <div style={{ marginBottom: 12 }}>
+            <div className="caption" style={{ fontSize: 13, fontWeight: 850, marginBottom: 8 }}>집 생활을 위한 필수 정보</div>
           </div>
-          <Icon name="chevron-right" size={17} style={{ color:"var(--primary)" }} />
-        </div>
-        {/* 검색 */}
-        <div style={{ position:"relative", marginBottom:8 }}>
-          <Icon name="search" size={16} style={{ position:"absolute", left:13, top:"50%", transform:"translateY(-50%)", color:"var(--text-3)", pointerEvents:"none" }} />
-          <input
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="게시글 검색"
-            style={{ width:"100%", border:"1px solid var(--line)", borderRadius:14, padding:"10px 12px 10px 36px", fontSize:14, fontFamily:"var(--font)", background:"var(--bg)", color:"var(--text)", boxSizing:"border-box" }}
-          />
-        </div>
-        <div className="chip-row">
-          {CATEGORIES.map((category) => (
-            <button key={category} className={`chip${cat === category ? " chip--active" : ""}`} onClick={() => setCat(category)}>
-              {category}
-            </button>
-          ))}
-        </div>
+        )}
       </div>
       <Screen>
-        <div className="stack gap-10" style={{ marginTop: 4 }}>
-          {filtered.map((post) => (
-            <PostCard key={post.id} post={post} onClick={() => navigate("postDetail", { id: post.id })} />
-          ))}
-        </div>
+        {tab === "board" ? (
+          <div className="stack gap-10" style={{ marginTop: 4 }}>
+            {filtered.map((post) => (
+              <PostCard key={post.id} post={post} onClick={() => navigate("postDetail", { id: post.id })} />
+            ))}
+          </div>
+        ) : (
+          <div className="stack gap-10">
+            <Card 
+              style={{ background: "linear-gradient(135deg, #fef3c7, #fefce8)", cursor: "pointer", border: "2px solid #fbbf24" }}
+              onClick={() => navigate("houseInfo")}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <Icon name="info" size={24} style={{ color: "#d97706" }} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 950, fontSize: 15, color: "#92400e" }}>집 정보 메모장</div>
+                  <div className="caption" style={{ marginTop: 3, color: "#b45309" }}>생활규칙 · 동네정보 · 분리수거 · 긴급연락</div>
+                </div>
+                <Icon name="chevron-right" size={18} style={{ color: "#d97706" }} />
+              </div>
+            </Card>
+            <Card style={{ background: "var(--surface-2)", padding: 16 }}>
+              <div className="caption" style={{ color: "var(--text-2)" }}>집 정보 메모장에서는 하우스에서 함께 지켜야 할 생활규칙, 유용한 동네정보, 분리수거 방법, 긴급연락처 등을 모두 확인할 수 있어요.</div>
+            </Card>
+          </div>
+        )}
       </Screen>
     </>
   );
