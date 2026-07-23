@@ -3,7 +3,6 @@ import { Button, Card } from "../components/Primitives";
 import { useNavigation } from "../hooks/useNavigation";
 import { useSeeker } from "../hooks/useSeeker";
 import { LIFESTYLE_AXES, COMMUTE_HUBS } from "../data/lifestyle";
-import CommuteMapPicker from "../components/CommuteMapPicker";
 import { useState } from "react";
 
 interface ChipGridItem {
@@ -150,15 +149,21 @@ export default function LifestyleSetupPage() {
         </Card>
 
         {/* 통근 목적지 */}
-        <Card style={{ marginTop: 12, padding: 0, overflow: "hidden" }}>
-          <div style={{ padding: "14px 16px", fontWeight: 850, fontSize: 13.5, color: "var(--text)", borderBottom: "1px solid var(--line)" }}>
+        <Card style={{ marginTop: 12 }}>
+          <div style={{ fontWeight: 850, fontSize: 13.5, marginBottom: 12, color: "var(--text)" }}>
             통근 목적지
           </div>
-          <div style={{ padding: 12 }}>
-            <CommuteMapPicker selected={my.commuteHub} onSelect={setCommuteHub} />
-            <div style={{ fontSize: 12, color: "var(--text-secondary)", marginTop: 12, textAlign: "center" }}>
-              지도에서 위치를 클릭하세요
-            </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {COMMUTE_HUBS.map((hub) => (
+              <button
+                key={hub}
+                className={`chip${my.commuteHub === hub ? " chip--active" : ""}`}
+                onClick={() => setCommuteHub(hub)}
+                style={{ fontSize: 13 }}
+              >
+                📍 {hub}
+              </button>
+            ))}
           </div>
         </Card>
 
