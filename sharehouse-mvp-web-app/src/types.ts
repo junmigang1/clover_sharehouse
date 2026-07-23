@@ -174,6 +174,7 @@ export interface House {
   reviews: ReviewPeriod[]; // 최신이 배열 앞
   desc: string;
   rooms: RoomInfo[];
+  viewCount: number; // 현재 조회 중인 입주자 수
 }
 
 /** 구하는 사람의 생활습관 · 조건 */

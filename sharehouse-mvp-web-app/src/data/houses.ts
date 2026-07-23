@@ -29,6 +29,7 @@ export const houses: House[] = [
       { id:"h1-301", number:"301호", type:"1인실", sizeSqm:8.0, monthlyCost:660000, privateBath:false, privateAC:true,  available:false, floor:3 },
       { id:"h1-302", number:"302호", type:"1인실", sizeSqm:8.2, monthlyCost:670000, privateBath:false, privateAC:true,  available:false, floor:3 },
     ],
+    viewCount: 1,
     reviews: [
       {
         period: "2025 상반기",
@@ -82,6 +83,7 @@ export const houses: House[] = [
       { id:"h2-202", number:"202호", type:"2인실", sizeSqm:14.0,monthlyCost:980000, privateBath:false, privateAC:true,  available:false, floor:2 },
       { id:"h2-301", number:"301호", type:"1인실", sizeSqm:8.5, monthlyCost:650000, privateBath:false, privateAC:true,  available:false, floor:3 },
     ],
+    viewCount: 2,
     reviews: [
       {
         period: "2025 상반기",
@@ -138,6 +140,7 @@ export const houses: House[] = [
       { id:"h3-401", number:"401호", type:"1인실", sizeSqm:8.2, monthlyCost:720000, privateBath:true,  privateAC:true,  available:false, floor:4, desc:"최상층, 채광 최고" },
       { id:"h3-402", number:"402호", type:"1인실", sizeSqm:7.5, monthlyCost:700000, privateBath:false, privateAC:true,  available:false, floor:4 },
     ],
+    viewCount: 1,
     reviews: [
       {
         period: "2025 상반기",
@@ -192,6 +195,7 @@ export const houses: House[] = [
       { id:"h4-302", number:"302호", type:"1인실", sizeSqm:9.0, monthlyCost:670000, privateBath:false, privateAC:true,  available:false, floor:3 },
       { id:"h4-401", number:"401호", type:"1인실", sizeSqm:9.8, monthlyCost:690000, privateBath:false, privateAC:true,  available:false, floor:4 },
     ],
+    viewCount: 2,
     reviews: [
       {
         period: "2025 상반기",
@@ -247,6 +251,7 @@ export const houses: House[] = [
       { id:"h5-302", number:"302호", type:"1인실", sizeSqm:7.8, monthlyCost:595000, privateBath:false, privateAC:true,  available:false, floor:3 },
       { id:"h5-401", number:"401호", type:"1인실", sizeSqm:9.0, monthlyCost:620000, privateBath:false, privateAC:true,  available:false, floor:4 },
     ],
+    viewCount: 1,
     reviews: [
       {
         period: "2025 상반기",
@@ -290,6 +295,7 @@ export const houses: House[] = [
       { id:"h6-302", number:"302호", type:"1인실", sizeSqm:9.2, monthlyCost:740000, privateBath:false, privateAC:true,  available:false, floor:3 },
       { id:"h6-401", number:"401호", type:"1인실", sizeSqm:11.0,monthlyCost:800000, privateBath:true,  privateAC:true,  available:false, floor:4, desc:"최상층, IT 종사자 선호" },
     ],
+    viewCount: 2,
     reviews: [
       {
         period: "2025 상반기",
