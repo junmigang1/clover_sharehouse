@@ -1,0 +1,348 @@
+import type { House } from "../types";
+
+export const houses: House[] = [
+  {
+    id: "h1",
+    name: "네스트허브 연남",
+    station: "홍대입구역",
+    stationMins: 8,
+    commuteMins: 14,
+    monthlyCost: 680000,
+    deposit: 500,
+    genderPolicy: "혼성",
+    ageRange: "20대 중심",
+    jobMix: "직장인·대학원생",
+    memberCount: 6,
+    avgTenureMonths: 14,
+    lifestyle: { sleep: 2, clean: 4, quiet: 2, social: 3, guests: 2 },
+    smoking: "비흡연",
+    pet: "불가",
+    vibeTags: ["조용·집중", "정산 깔끔", "오래 사는 편"],
+    emoji: "연남",
+    bg: "linear-gradient(135deg,#ede9fe,#f0fdf4)",
+    desc: "재택·야근 없는 아침형 입주자가 많아 밤이 조용합니다. 정산과 청소 로테이션이 앱으로 굴러가 규칙 마찰이 적은 편이에요.",
+    rooms: [
+      { id:"h1-101", number:"101호", type:"1인실", sizeSqm:8.5, monthlyCost:680000, privateBath:false, privateAC:true,  available:true,  floor:1, desc:"채광 좋은 남향, 책상·침대 포함" },
+      { id:"h1-102", number:"102호", type:"1인실", sizeSqm:7.8, monthlyCost:650000, privateBath:false, privateAC:true,  available:false, floor:1 },
+      { id:"h1-201", number:"201호", type:"1인실", sizeSqm:9.2, monthlyCost:720000, privateBath:true,  privateAC:true,  available:false, floor:2, desc:"개인 화장실, 넓은 수납공간" },
+      { id:"h1-202", number:"202호", type:"1.5인실", sizeSqm:11.0,monthlyCost:780000, privateBath:true,  privateAC:true,  available:false, floor:2 },
+      { id:"h1-301", number:"301호", type:"1인실", sizeSqm:8.0, monthlyCost:660000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h1-302", number:"302호", type:"1인실", sizeSqm:8.2, monthlyCost:670000, privateBath:false, privateAC:true,  available:false, floor:3 },
+    ],
+    viewCount: 1, likeCount: 12,
+    reviews: [
+      {
+        period: "2025 상반기",
+        responses: 6,
+        satisfaction: 88,
+        scores: [
+          { label: "청결", value: 90 },
+          { label: "소음", value: 86 },
+          { label: "소통", value: 82 },
+          { label: "규칙 준수", value: 92 },
+        ],
+        quote: "생활 시간대가 비슷해서 부딪힐 일이 거의 없었어요.",
+      },
+      {
+        period: "2024 하반기",
+        responses: 6,
+        satisfaction: 84,
+        scores: [
+          { label: "청결", value: 88 },
+          { label: "소음", value: 80 },
+          { label: "소통", value: 79 },
+          { label: "규칙 준수", value: 90 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "h2",
+    name: "브릿지하우스 망원",
+    station: "망원역",
+    stationMins: 5,
+    commuteMins: 22,
+    monthlyCost: 640000,
+    deposit: 400,
+    genderPolicy: "혼성",
+    ageRange: "20대 후반",
+    jobMix: "프리랜서·직장인",
+    memberCount: 5,
+    avgTenureMonths: 9,
+    lifestyle: { sleep: 3, clean: 3, quiet: 3, social: 4, guests: 3 },
+    smoking: "실외흡연",
+    pet: "가능",
+    vibeTags: ["동네 맛집", "적당한 교류", "가성비"],
+    emoji: "망원",
+    bg: "linear-gradient(135deg,#e0f2fe,#fef9c3)",
+    desc: "망원시장·한강이 가깝고 저녁에 같이 밥 먹는 분위기가 있습니다. 너무 붙지도 너무 각자도 아닌 중간 톤이에요.",
+    rooms: [
+      { id:"h2-101", number:"101호", type:"1인실", sizeSqm:7.5, monthlyCost:620000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h2-102", number:"102호", type:"1인실", sizeSqm:8.0, monthlyCost:640000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h2-201", number:"201호", type:"1인실", sizeSqm:9.0, monthlyCost:680000, privateBath:true,  privateAC:true,  available:false, floor:2, desc:"조용한 뒷편, 개인 화장실" },
+      { id:"h2-202", number:"202호", type:"2인실", sizeSqm:14.0,monthlyCost:980000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h2-301", number:"301호", type:"1인실", sizeSqm:8.5, monthlyCost:650000, privateBath:false, privateAC:true,  available:false, floor:3 },
+    ],
+    viewCount: 2, likeCount: 8,
+    reviews: [
+      {
+        period: "2025 상반기",
+        responses: 5,
+        satisfaction: 79,
+        scores: [
+          { label: "청결", value: 74 },
+          { label: "소음", value: 76 },
+          { label: "소통", value: 88 },
+          { label: "규칙 준수", value: 78 },
+        ],
+        quote: "사람들은 좋은데 설거지 텀은 가끔 아쉬웠어요.",
+      },
+      {
+        period: "2024 하반기",
+        responses: 4,
+        satisfaction: 76,
+        scores: [
+          { label: "청결", value: 70 },
+          { label: "소음", value: 78 },
+          { label: "소통", value: 86 },
+          { label: "규칙 준수", value: 74 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "h3",
+    name: "루프스테이 홍대",
+    station: "홍대입구역",
+    stationMins: 6,
+    commuteMins: 16,
+    monthlyCost: 720000,
+    deposit: 500,
+    genderPolicy: "혼성",
+    ageRange: "20대 초중반",
+    jobMix: "대학생·사회초년생",
+    memberCount: 8,
+    avgTenureMonths: 6,
+    lifestyle: { sleep: 4, clean: 3, quiet: 4, social: 5, guests: 4 },
+    smoking: "실외흡연",
+    pet: "불가",
+    vibeTags: ["활발한 교류", "이벤트 많음", "새 입주 적응 빠름"],
+    emoji: "홍대",
+    bg: "linear-gradient(135deg,#fee2e2,#ede9fe)",
+    desc: "라운지 모임·번개가 잦고 새 입주자도 금방 섞입니다. 왁자지껄한 걸 좋아하면 최고, 조용한 밤을 원하면 피로할 수 있어요.",
+    rooms: [
+      { id:"h3-101", number:"101호", type:"1인실", sizeSqm:6.5, monthlyCost:680000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h3-102", number:"102호", type:"1인실", sizeSqm:7.0, monthlyCost:700000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h3-201", number:"201호", type:"1인실", sizeSqm:8.0, monthlyCost:720000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h3-202", number:"202호", type:"1인실", sizeSqm:7.5, monthlyCost:700000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h3-301", number:"301호", type:"2인실", sizeSqm:13.0,monthlyCost:950000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h3-302", number:"302호", type:"1인실", sizeSqm:7.8, monthlyCost:710000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h3-401", number:"401호", type:"1인실", sizeSqm:8.2, monthlyCost:720000, privateBath:true,  privateAC:true,  available:false, floor:4, desc:"최상층, 채광 최고" },
+      { id:"h3-402", number:"402호", type:"1인실", sizeSqm:7.5, monthlyCost:700000, privateBath:false, privateAC:true,  available:false, floor:4 },
+    ],
+    viewCount: 1, likeCount: 10,
+    reviews: [
+      {
+        period: "2025 상반기",
+        responses: 8,
+        satisfaction: 82,
+        scores: [
+          { label: "청결", value: 72 },
+          { label: "소음", value: 64 },
+          { label: "소통", value: 95 },
+          { label: "규칙 준수", value: 70 },
+        ],
+        quote: "친구가 금방 생기지만 시험기간엔 좀 시끄러워요.",
+      },
+      {
+        period: "2024 하반기",
+        responses: 7,
+        satisfaction: 80,
+        scores: [
+          { label: "청결", value: 70 },
+          { label: "소음", value: 62 },
+          { label: "소통", value: 94 },
+          { label: "규칙 준수", value: 68 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "h4",
+    name: "스테이포레스트 합정",
+    station: "합정역",
+    stationMins: 7,
+    commuteMins: 19,
+    monthlyCost: 660000,
+    deposit: 450,
+    genderPolicy: "여성전용",
+    ageRange: "20대 중후반",
+    jobMix: "직장인 위주",
+    memberCount: 6,
+    avgTenureMonths: 16,
+    lifestyle: { sleep: 2, clean: 5, quiet: 2, social: 2, guests: 1 },
+    smoking: "비흡연",
+    pet: "불가",
+    vibeTags: ["여성전용", "매우 깔끔", "프라이버시 존중"],
+    emoji: "합정",
+    bg: "linear-gradient(135deg,#dcfce7,#eff6ff)",
+    desc: "청결 규칙이 확실하고 각자 생활을 존중합니다. 손님 초대가 거의 없고 밤이 특히 조용해 예민한 분에게 잘 맞아요.",
+    rooms: [
+      { id:"h4-101", number:"101호", type:"1인실", sizeSqm:9.0, monthlyCost:660000, privateBath:false, privateAC:true,  available:true,  floor:1, desc:"여성전용, 매우 조용한 1층" },
+      { id:"h4-201", number:"201호", type:"1인실", sizeSqm:10.0,monthlyCost:700000, privateBath:true,  privateAC:true,  available:false, floor:2 },
+      { id:"h4-202", number:"202호", type:"1인실", sizeSqm:9.5, monthlyCost:680000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h4-301", number:"301호", type:"1인실", sizeSqm:11.0,monthlyCost:730000, privateBath:true,  privateAC:true,  available:false, floor:3 },
+      { id:"h4-302", number:"302호", type:"1인실", sizeSqm:9.0, monthlyCost:670000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h4-401", number:"401호", type:"1인실", sizeSqm:9.8, monthlyCost:690000, privateBath:false, privateAC:true,  available:false, floor:4 },
+    ],
+    viewCount: 2, likeCount: 10,
+    reviews: [
+      {
+        period: "2025 상반기",
+        responses: 6,
+        satisfaction: 91,
+        scores: [
+          { label: "청결", value: 96 },
+          { label: "소음", value: 92 },
+          { label: "소통", value: 78 },
+          { label: "규칙 준수", value: 95 },
+        ],
+        quote: "혼자 있는 시간이 확실히 지켜져서 편했어요.",
+      },
+      {
+        period: "2024 하반기",
+        responses: 5,
+        satisfaction: 89,
+        scores: [
+          { label: "청결", value: 94 },
+          { label: "소음", value: 90 },
+          { label: "소통", value: 76 },
+          { label: "규칙 준수", value: 94 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "h5",
+    name: "커먼빌 성산",
+    station: "마포구청역",
+    stationMins: 9,
+    commuteMins: 24,
+    monthlyCost: 590000,
+    deposit: 300,
+    genderPolicy: "혼성",
+    ageRange: "20~30대",
+    jobMix: "대학원생·직장인",
+    memberCount: 7,
+    avgTenureMonths: 8,
+    lifestyle: { sleep: 3, clean: 3, quiet: 3, social: 3, guests: 2 },
+    smoking: "실외흡연",
+    pet: "환영",
+    vibeTags: ["가성비", "반려동물 환영", "무난한 밸런스"],
+    emoji: "성산",
+    bg: "linear-gradient(135deg,#ccfbf1,#faf5ff)",
+    desc: "특별히 튀는 색은 없지만 크게 어긋나는 것도 없는 무난한 집. 비용이 낮고 빈방이 여러 개라 입주 타이밍이 유연합니다.",
+    rooms: [
+      { id:"h5-101", number:"101호", type:"1인실", sizeSqm:7.0, monthlyCost:570000, privateBath:false, privateAC:false, available:true,  floor:1 },
+      { id:"h5-102", number:"102호", type:"1인실", sizeSqm:7.5, monthlyCost:590000, privateBath:false, privateAC:true,  available:true,  floor:1 },
+      { id:"h5-201", number:"201호", type:"2인실", sizeSqm:13.5,monthlyCost:880000, privateBath:false, privateAC:true,  available:true,  floor:2, desc:"반려동물 환영, 여유로운 공간" },
+      { id:"h5-202", number:"202호", type:"1인실", sizeSqm:8.0, monthlyCost:600000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h5-301", number:"301호", type:"1인실", sizeSqm:8.5, monthlyCost:610000, privateBath:true,  privateAC:true,  available:false, floor:3 },
+      { id:"h5-302", number:"302호", type:"1인실", sizeSqm:7.8, monthlyCost:595000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h5-401", number:"401호", type:"1인실", sizeSqm:9.0, monthlyCost:620000, privateBath:false, privateAC:true,  available:false, floor:4 },
+    ],
+    viewCount: 1, likeCount: 10,
+    reviews: [
+      {
+        period: "2025 상반기",
+        responses: 7,
+        satisfaction: 77,
+        scores: [
+          { label: "청결", value: 76 },
+          { label: "소음", value: 78 },
+          { label: "소통", value: 80 },
+          { label: "규칙 준수", value: 75 },
+        ],
+        quote: "무난해요. 큰 불만도 큰 감동도 없는 편.",
+      },
+    ],
+  },
+  {
+    id: "h6",
+    name: "네스트허브 성수",
+    station: "성수역",
+    stationMins: 6,
+    commuteMins: 28,
+    monthlyCost: 750000,
+    deposit: 600,
+    genderPolicy: "혼성",
+    ageRange: "20대 후반~30대",
+    jobMix: "IT·크리에이터",
+    memberCount: 6,
+    avgTenureMonths: 11,
+    lifestyle: { sleep: 4, clean: 4, quiet: 3, social: 3, guests: 3 },
+    smoking: "비흡연",
+    pet: "불가",
+    vibeTags: ["재택 친화", "깔끔·조용 균형", "카페 상권"],
+    emoji: "성수",
+    bg: "linear-gradient(135deg,#f5f3ff,#ecfeff)",
+    desc: "재택근무자가 많아 낮에도 집이 안정적이고, 저녁형이지만 서로 방해는 잘 안 합니다. 작업 공간이 필요한 사람에게 인기예요.",
+    rooms: [
+      { id:"h6-101", number:"101호", type:"1인실", sizeSqm:9.5, monthlyCost:720000, privateBath:false, privateAC:true,  available:true,  floor:1, desc:"재택 친화, 넓은 책상 공간" },
+      { id:"h6-201", number:"201호", type:"1인실", sizeSqm:10.0,monthlyCost:750000, privateBath:true,  privateAC:true,  available:false, floor:2 },
+      { id:"h6-202", number:"202호", type:"1인실", sizeSqm:9.0, monthlyCost:730000, privateBath:false, privateAC:true,  available:false, floor:2 },
+      { id:"h6-301", number:"301호", type:"1인실", sizeSqm:10.5,monthlyCost:770000, privateBath:true,  privateAC:true,  available:false, floor:3 },
+      { id:"h6-302", number:"302호", type:"1인실", sizeSqm:9.2, monthlyCost:740000, privateBath:false, privateAC:true,  available:false, floor:3 },
+      { id:"h6-401", number:"401호", type:"1인실", sizeSqm:11.0,monthlyCost:800000, privateBath:true,  privateAC:true,  available:false, floor:4, desc:"최상층, IT 종사자 선호" },
+    ],
+    viewCount: 2, likeCount: 10,
+    reviews: [
+      {
+        period: "2025 상반기",
+        responses: 6,
+        satisfaction: 85,
+        scores: [
+          { label: "청결", value: 86 },
+          { label: "소음", value: 84 },
+          { label: "소통", value: 80 },
+          { label: "규칙 준수", value: 88 },
+        ],
+        quote: "재택하기 좋고 서로 적당히 거리감을 지켜줘요.",
+      },
+    ],
+  },
+];
+
+/** 빈방 수는 rooms 에서만 계산한다 (단일 소스) */
+export function openRoomCount(house: House): number {
+  return house.rooms.filter((r) => r.available).length;
+}
+
+/** 집의 가격 범위를 "59만~78만원" 형식으로 반환 */
+export function priceRange(house: House): string {
+  if (house.rooms.length === 0) return "-";
+  const costs = house.rooms.map((r) => r.monthlyCost);
+  const min = Math.min(...costs);
+  const max = Math.max(...costs);
+  const formatPrice = (price: number) => {
+    return `${Math.floor(price / 10000)}만`;
+  };
+  return `${formatPrice(min)}~${formatPrice(max)}원`;
+}
+
+export function houseById(id: string): House {
+  return houses.find((h) => h.id === id) ?? houses[0];
+}
+
+/** 통근 허브가 바뀌면 하우스마다 소요시간이 달라지는 것을 흉내내는 목업 오프셋 */
+const HUB_OFFSET: Record<string, number> = {
+  연세대: 0,
+  홍대입구역: -4,
+  강남역: 18,
+  여의도: 10,
+  판교: 32,
+};
+
+export function commuteTo(house: House, hub: string): number {
+  return Math.max(5, house.commuteMins + (HUB_OFFSET[hub] ?? 0));
+}
