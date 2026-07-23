@@ -4,7 +4,7 @@ export const aiTools: AITool[] = [
   {
     id: "movein",
     title: "입주 준비 체크",
-    desc: "새 입주자가 필요한 가구, 비품, 정산 항목을 체크리스트로 정리해줘요.",
+    desc: "입주 준비에 필요한 가구, 비품, 정산 항목을 체크리스트로 정리해줘요.",
     icon: "입주",
     accent: "amber",
     inputLabel: "언제, 어떤 방에 입주하나요?",

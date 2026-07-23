@@ -7,7 +7,7 @@ import { useNavigation } from "../hooks/useNavigation";
 import { chores, schedules } from "../data/schedules";
 import { announcements } from "../data/announcements";
 import { anonPosts } from "../data/anonPosts";
-import { myUnpaidTotal, won } from "../data/expenses";
+import { myUnpaidTotal, won, expenseFormat } from "../data/expenses";
 import { house, me, memberById, cleaningRotation } from "../data/members";
 import { cleaningDoneState } from "../data/members";
 
@@ -116,7 +116,7 @@ export default function HomePage() {
 
             {/* 3. 정산 */}
             <div className="metric-grid">
-              <MetricCard label="미정산 금액" value={won(unpaid)} tone="coral" onClick={() => navigate("expenses")} />
+              <MetricCard label="미정산 금액" value={expenseFormat(unpaid)} tone="coral" onClick={() => navigate("expenses")} />
               <MetricCard label="활성 멤버" value={`${house.members}/6명`} tone="violet" onClick={() => navigate("members")} />
             </div>
 

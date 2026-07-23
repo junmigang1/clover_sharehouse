@@ -76,13 +76,6 @@ export default function LordApplicantsPage() {
 
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
                     <FitBadge pct={fit} />
-                    {a.prevSatisfaction !== undefined ? (
-                      <Tag variant={a.prevSatisfaction >= 80 ? "green" : a.prevSatisfaction >= 65 ? "amber" : "coral"}>
-                        이전 집 {a.prevSatisfaction}% · {a.prevMonths}개월
-                      </Tag>
-                    ) : (
-                      <Tag variant="gray">셰어하우스 처음</Tag>
-                    )}
                     {!a.noSmoke && <Tag variant="gray">흡연</Tag>}
                   </div>
 
@@ -93,10 +86,7 @@ export default function LordApplicantsPage() {
           </div>
         )}
 
-        <div className="caption" style={{ marginTop: 16, lineHeight: 1.55, display: "flex", gap: 7 }}>
-          <Icon name="info" size={14} style={{ flex: "0 0 auto", marginTop: 2 }} />
-          이전 집 점수는 그 집 입주자들이 남긴 익명 집계입니다. 개인을 지목한 평가가 아니라 함께 살았던 기간의 종합 만족도예요.
-        </div>
+
       </Screen>
     </>
   );

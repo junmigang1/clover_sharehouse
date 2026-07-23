@@ -20,9 +20,8 @@ const TENANT_NAV: NavItem[] = [
 const LANDLORD_NAV: NavItem[] = [
   { key: "lordHome", label: "운영 현황", desc: "", icon: "home" },
   { key: "lordHouses", label: "내 매물", desc: "", icon: "market" },
-  { key: "lordApplicants", label: "입주 신청", desc: "", icon: "user" },
+  { key: "lordApplicants", label: "입주 문의", desc: "", icon: "user" },
   { key: "community", label: "커뮤니티", desc: "", icon: "community" },
-  { key: "lordReviews", label: "만족도 리포트", desc: "", icon: "check-circle" },
 ];
 
 export function MobileFrame({ children }: { children: ReactNode }) {
@@ -48,9 +47,9 @@ function DesktopSidebar() {
   return (
     <aside className="desktop-sidebar" aria-label="주요 메뉴">
       <div className="desktop-brand">
-        <div className="desktop-brand__mark">N</div>
+        <div className="desktop-brand__mark">M</div>
         <div>
-          <div className="desktop-brand__title">NestHub</div>
+          <div className="desktop-brand__title">Mynest</div>
           <div className="desktop-brand__sub">{isLord ? landlord.name : house.name}</div>
         </div>
       </div>

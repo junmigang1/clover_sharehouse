@@ -89,12 +89,13 @@ export default function HouseDetailPage({ id }: { id: string }) {
         <Card>
           <div className="metric-grid">
             <Metric label="입주자" value={`${house.memberCount}명`} />
-            <Metric label="평균 거주" value={tenureLabel(house.avgTenureMonths)} />
+            <Metric label="추천율" value={`${house.reviews[0]?.satisfaction ?? 0}%`} />
             <Metric label="성별" value={house.genderPolicy} />
             <Metric label="연령대" value={house.ageRange} />
           </div>
           <div className="divider" style={{ margin: "12px 0" }} />
           <div className="caption">주요 구성 · {house.jobMix}</div>
+          <div className="caption" style={{ marginTop: 6 }}>지금 {Math.floor(Math.random() * 5) + 2}명이 이 집을 보고 있어요</div>
         </Card>
 
 
@@ -162,7 +163,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
             투어 신청
           </Button>
           <Button variant="primary" onClick={() => navigate("moveInRequest", { id: house.id })} style={{ flex: 1 }} icon="send">
-            입주 신청
+            입주 문의하기
           </Button>
         </div>
       </Screen>

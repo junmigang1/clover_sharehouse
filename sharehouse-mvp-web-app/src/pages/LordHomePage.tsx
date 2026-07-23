@@ -84,12 +84,12 @@ export default function LordHomePage() {
           </>
         )}
 
-        <SectionHeader title="하우스 만족도" more="리포트" onMore={() => navigate("lordReviews")} />
+        <SectionHeader title="하우스 만족도" />
         <div className="stack gap-10">
           {myHouses.map((h) => {
             const latest = h.reviews[0];
             return (
-              <Card key={h.id} onClick={() => navigate("lordReviews")}>
+              <Card key={h.id}>
                 <div className="row-between" style={{ marginBottom: 8 }}>
                   <div style={{ fontWeight: 900, fontSize: 15 }}>{h.name}</div>
                   <span className="num" style={{ fontWeight: 900, color: latest ? "var(--primary)" : "var(--text-3)" }}>
@@ -99,7 +99,7 @@ export default function LordHomePage() {
                 <Bar value={latest?.satisfaction ?? 0} />
                 <div className="caption" style={{ marginTop: 8 }}>
                   {latest
-                    ? `${latest.period} · 익명 ${latest.responses}명 · 평균 거주 ${tenureLabel(h.avgTenureMonths)}`
+                    ? `${latest.period} · 익명 ${latest.responses}명`
                     : "아직 모인 후기가 없어요"}
                 </div>
               </Card>

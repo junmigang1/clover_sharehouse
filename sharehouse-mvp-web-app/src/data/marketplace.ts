@@ -13,7 +13,7 @@ export const marketItems: MarketItem[] = [
     condition: "상태 좋음",
     emoji: "책상",
     bg: "linear-gradient(135deg,#ede9fe,#f8fafc)",
-    desc: "케이블 트레이가 있는 화이트 스탠딩 책상입니다. 오른쪽 모서리에 작은 사용감이 있고, 이번에 방을 빼면서 새 입주자에게 넘깁니다. 집 안에서 바로 인수 가능해요.",
+    desc: "케이블 트레이가 있는 화이트 스탠딩 책상입니다. 오른쪽 모서리에 작은 사용감이 있고, 집을 나가면서 넘깁니다. 집 안에서 바로 인수 가능해요.",
     status: "판매중",
   },
   {
@@ -28,7 +28,7 @@ export const marketItems: MarketItem[] = [
     condition: "양호",
     emoji: "의자",
     bg: "linear-gradient(135deg,#e0f2fe,#ffffff)",
-    desc: "높이와 틸트 조절이 가능한 편한 의자입니다. 새 입주자 세팅용으로 가져가기 좋아요.",
+    desc: "높이와 틸트 조절이 가능한 편한 의자입니다. 세팅용으로 가져가기 좋아요.",
     status: "예약중",
   },
   {
@@ -43,7 +43,7 @@ export const marketItems: MarketItem[] = [
     condition: "사용감 있음",
     emoji: "주방",
     bg: "linear-gradient(135deg,#dcfce7,#fff7ed)",
-    desc: "새로 들어오는 입주자에게 나눔합니다. 작동은 잘 되고, 바스켓 코팅에 작은 스크래치가 있어요.",
+    desc: "함께 나눕니다. 작동은 잘 되고, 바스켓 코팅에 작은 스크래치가 있어요.",
     status: "판매중",
   },
   {

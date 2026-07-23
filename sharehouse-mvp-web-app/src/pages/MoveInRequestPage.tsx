@@ -32,7 +32,7 @@ export default function MoveInRequestPage({ id }: { id: string }) {
 
   return (
     <>
-      <TopBar title="입주 신청" sub={house.name} />
+      <TopBar title="입주 문의하기" sub={house.name} />
       <Screen>
         {availableRooms.length === 0 ? (
           <Card style={{ marginTop: 8 }}>
@@ -86,7 +86,7 @@ export default function MoveInRequestPage({ id }: { id: string }) {
             </Card>
 
             <Button variant="primary" block icon={submitted ? "check-circle" : "send"} style={{ marginTop: 18 }} onClick={submit} disabled={!roomId || !moveInDate}>
-              {submitted ? "신청했어요" : "입주 신청하기"}
+              {submitted ? "문의했어요" : "입주 문의하기"}
             </Button>
           </>
         )}

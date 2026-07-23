@@ -81,7 +81,7 @@ export default function MarketComposePage() {
 
   return (
     <>
-      <TopBar title="물건 올리기" sub="새 입주자에게 넘기거나 나눔해요" />
+      <TopBar title="물건 올리기" sub="함께 나눔해요" />
       <Screen>
         <Card style={{ marginTop: 8 }}>
           <div className="row-between" style={{ marginBottom: 8 }}>

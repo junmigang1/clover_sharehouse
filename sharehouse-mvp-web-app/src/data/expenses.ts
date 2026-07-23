@@ -50,3 +50,5 @@ export function myUnpaidTotal(myId: string): number {
 }
 
 export const won = (n: number) => (n === 0 ? "나눔" : `${n.toLocaleString("ko-KR")}원`);
+
+export const expenseFormat = (n: number) => (n === 0 ? "완료" : `${n.toLocaleString("ko-KR")}원`);
