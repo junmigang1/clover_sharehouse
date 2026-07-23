@@ -10,7 +10,20 @@ export const LIFESTYLE_AXES: LifestyleAxis[] = [
 ];
 
 /** 통근 허브 (목업) — 각 하우스의 commuteMins 는 이 기준값을 가정 */
-export const COMMUTE_HUBS = ["연세대", "홍대입구역", "강남역", "여의도", "판교"];
+export const COMMUTE_HUBS = [
+  "연세대",
+  "홍대입구역",
+  "강남역",
+  "여의도",
+  "판교",
+  "잠실역",
+  "서초역",
+  "을지로입구역",
+  "강북삼성병원역",
+  "신촌역",
+  "명동역",
+  "동대문역",
+];
 
 /** 설정 전 디폴트 — 모든 축 중간값. 점수는 보여주되 UI에서 "내 성향 기반 아님"을 알린다 */
 export const DEFAULT_MY_LIFESTYLE: MyLifestyle = {

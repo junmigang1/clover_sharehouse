@@ -66,6 +66,8 @@ export default function LifestyleSetupPage() {
     cost: false,
     longTerm: false,
   });
+  const [commuteSearch, setCommuteSearch] = useState("");
+  const filteredHubs = COMMUTE_HUBS.filter(hub => hub.includes(commuteSearch));
 
   const togglePreference = (id: string) => {
     setPreferences((p) => ({ ...p, [id]: !p[id] }));
@@ -153,17 +155,36 @@ export default function LifestyleSetupPage() {
           <div style={{ fontWeight: 850, fontSize: 13.5, marginBottom: 12, color: "var(--text)" }}>
             통근 목적지
           </div>
+          <input
+            type="text"
+            placeholder="역/회사명 검색 (예: 강남, 홍대)"
+            value={commuteSearch}
+            onChange={(e) => setCommuteSearch(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "10px 12px",
+              borderRadius: 12,
+              border: "1px solid var(--line)",
+              fontSize: 14,
+              marginBottom: 12,
+              fontFamily: "var(--font)",
+            }}
+          />
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {COMMUTE_HUBS.map((hub) => (
-              <button
-                key={hub}
-                className={`chip${my.commuteHub === hub ? " chip--active" : ""}`}
-                onClick={() => setCommuteHub(hub)}
-                style={{ fontSize: 13 }}
-              >
-                📍 {hub}
-              </button>
-            ))}
+            {filteredHubs.length > 0 ? (
+              filteredHubs.map((hub) => (
+                <button
+                  key={hub}
+                  className={`chip${my.commuteHub === hub ? " chip--active" : ""}`}
+                  onClick={() => setCommuteHub(hub)}
+                  style={{ fontSize: 13 }}
+                >
+                  📍 {hub}
+                </button>
+              ))
+            ) : (
+              <div className="caption" style={{ color: "var(--text-3)" }}>검색 결과가 없어요</div>
+            )}
           </div>
         </Card>
 
