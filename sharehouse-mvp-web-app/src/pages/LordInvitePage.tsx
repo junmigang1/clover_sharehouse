@@ -28,7 +28,7 @@ export default function LordInvitePage({ id }: { id?: string }) {
   const create = () => {
     const code = randomCode();
     setList((prev) => [
-      { id: `i${Date.now()}`, houseId, room: room.trim() || "미지정", code, status: "미사용" },
+      { id: `i${Date.now()}`, houseId, room: room.trim() || "미지정", code, status: "대기 중" },
       ...prev,
     ]);
     setJustMade(code);

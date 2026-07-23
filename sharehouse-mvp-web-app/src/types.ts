@@ -214,7 +214,7 @@ export interface Invite {
   houseId: string;
   room: string;
   code: string;
-  status: "미사용" | "수락됨" | "만료";
+  status: "대기 중" | "수락됨" | "만료";
   sentTo?: string;
 }
 

@@ -14,7 +14,7 @@ export default function LordHomePage() {
   const openRooms = myHouses.reduce((sum, h) => sum + openRoomCount(h), 0);
   const pending = applicants.filter((a) => a.status === "검토 전" || a.status === "투어 요청");
   const pendingMine = pending.filter((a) => myHouseIds.includes(a.houseId));
-  const liveInvites = invites.filter((i) => i.status === "미사용").length;
+  const liveInvites = invites.filter((i) => i.status === "대기 중").length;
 
   // 만족도 항목 중 낮은 값 — 임대인이 개입해야 할 신호
   const alerts = myHouses.flatMap((h) =>

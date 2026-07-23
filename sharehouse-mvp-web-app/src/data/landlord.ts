@@ -80,7 +80,7 @@ export const applicants: Applicant[] = [
 ];
 
 export const invites: Invite[] = [
-  { id: "i1", houseId: "h1", room: "301호", code: "NEST-3F91", status: "미사용", sentTo: "정S" },
+  { id: "i1", houseId: "h1", room: "301호", code: "NEST-3F91", status: "대기 중", sentTo: "정S" },
   { id: "i2", houseId: "h6", room: "202호", code: "NEST-7K22", status: "수락됨", sentTo: "최M" },
   { id: "i3", houseId: "h6", room: "204호", code: "NEST-1B47", status: "만료" },
 ];
