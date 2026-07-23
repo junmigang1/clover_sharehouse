@@ -96,6 +96,7 @@ export default function HouseDetailPage({ id }: { id: string }) {
           <div className="divider" style={{ margin: "12px 0" }} />
           <div className="caption">주요 구성 · {house.jobMix}</div>
           <div className="caption" style={{ marginTop: 6 }}>지금 {Math.floor(Math.random() * 5) + 2}명이 이 집을 보고 있어요</div>
+          <div className="caption" style={{ marginTop: 6 }}>💖 {house.likeCount}명이 관심 등록했어요</div>
         </Card>
 
 
