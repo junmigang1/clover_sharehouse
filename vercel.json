@@ -1,5 +1,0 @@
-{
-  "buildCommand": "cd sharehouse-mvp-web-app && npm install && npm run build",
-  "outputDirectory": "sharehouse-mvp-web-app/dist",
-  "framework": null
-}
